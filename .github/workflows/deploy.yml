@@ -1,0 +1,32 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
+  CLOUDSDK_RUN_PLATFORM: managed
+  CLOUDSDK_RUN_REGION: us-central1
+
+jobs:
+  build-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Build
+        run: |
+          gcloud builds submit --tag ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+
+      - name: Deploy
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }} --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
