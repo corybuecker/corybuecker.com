@@ -80,8 +80,8 @@ Under IAM & admin > Service accounts, click on the new service account. On the r
 At this point you can deploy to Cloud Run with the new service account.
 
     gcloud run deploy nginx \
-        --image gcr.io/blog-262412/nginx:$(git rev-parse HEAD) \
-        --service-account github-actions@blog-262412.iam.gserviceaccount.com \
+        --image gcr.io/PROJECT-ID/nginx:$(git rev-parse HEAD) \
+        --service-account github-actions@PROJECT-ID.iam.gserviceaccount.com \
         --platform managed \
         --region us-central1 \
         --allow-unauthenticated
