@@ -1,5 +1,6 @@
 ---
 title: How to run a static site in Google Cloud Run
+drafted: 2019-12-08
 published: 2019-12-08
 draft: false
 preview: Originally, I wanted to run this site in a Google Cloud Storage bucket. However, I wanted to have more control over some of the load balancer settings. Specifically, Cloud Storage buckets do not allow HTTPS unless the bucket is fronted by a Google Load Balancer or a third-party CDN. The simplest solution that also yields a significant amount of control is hosting via Google Cloud Run. Cloud Run is an inexpensive stateless container platform. It performs automatic HTTP to HTTPS redirect (without HSTS, see below) and it's trivial to run a custom NGINX image.
@@ -55,7 +56,7 @@ Place an `nginx.conf` file in the root directory of your project. Be sure to cha
 server {
     listen 8080;
     server_name yourdomain.com;
-    
+
     gzip on;
     gzip_types text/html application/javascript text/css;
 
@@ -70,7 +71,7 @@ server {
         root /usr/share/nginx/html;
         index index.html index.htm;
     }
-    
+
     error_page 404 /404.html;
 }
 ```
@@ -94,7 +95,7 @@ docker push gcr.io/PROJECT-ID/image:latest
 Deploy the new image to Cloud Run. Substitute your service name and the image name created above.
 
 ```
-gcloud run deploy SERVICE-NAME --image gcr.io/PROJECT-ID/image:latest  
+gcloud run deploy SERVICE-NAME --image gcr.io/PROJECT-ID/image:latest
 ```
 
 If you want the site to be publicly accessible, say "y" when asked if you want to allow unauthenticated invocations.

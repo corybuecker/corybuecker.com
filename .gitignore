@@ -106,3 +106,4 @@ dist
 out/
 .DS_Store
 src/content.json
+credentials.json

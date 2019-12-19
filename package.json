@@ -14,7 +14,8 @@
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-markdown": "^4.2.2"
+    "react-markdown": "^4.2.2",
+    "watch": "^1.0.2"
   },
   "scripts": {
     "compile": "node src/compile_content.js",
@@ -23,6 +24,7 @@
     "prebuild": "npm run compile",
     "build": "next build",
     "preexport": "npm run build",
-    "export": "next export"
+    "export": "next export",
+    "watch": "watch 'npm run compile' ./content"
   }
 }

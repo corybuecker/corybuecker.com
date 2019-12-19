@@ -1,5 +1,6 @@
 ---
 title: How to make a static blog in Markdown and Next.js
+drafted: 2019-12-01
 published: 2019-12-01
 draft: false
 preview: I had a couple of requirements in mind when starting this site. First, I wanted to use Markdown but build the main content management system (CMS) with React. It also needs to transpile into a static site so that I can host it in a S3 bucket or in Google Cloud Storage. The Markdown content files need to contain front matter that renders to the page.
@@ -15,18 +16,20 @@ If you prefer to see the code for this blog, it is [hosted on Github](https://gi
 
 1. First, follow the [setup guide](https://nextjs.org/docs) to create a new Next.js application.
 2. Create a `content` folder in your new project and add a sample Markdown file with some front matter.
-    ```
-    ---
-    title: An introduction
-    published: 2019-11-30
-    ---
 
-    Hi!
-    ```
+   ```
+   ---
+   title: An introduction
+   published: 2019-11-30
+   ---
+
+   Hi!
+   ```
+
 3. Install `react-markdown` and `front-matter`. These will be used to convert the Markdown content files into HTML.
-    ```
-    npm install --save-dev react-markdown front-matter
-    ```
+   ```
+   npm install --save-dev react-markdown front-matter
+   ```
 
 ## Aggregate the content
 
@@ -109,3 +112,6 @@ module.exports = {
     })
   }
 }
+```
+
+At this point, the contents of the `out` directory can be served from a Cloud Storage or S3 bucket.

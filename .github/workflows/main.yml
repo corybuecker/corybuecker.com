@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+name: Build and deploy to Cloud Run
 
 on:
   push:
@@ -12,21 +12,26 @@ env:
 
 jobs:
   build-deploy:
-    name: Build and Deploy
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
-      - name: Build
-        run: |
-          gcloud builds submit --tag ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+      - name: Configure Docker
+        run: gcloud auth configure-docker
 
-      - name: Deploy
+      - name: Build image
+        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
+
+      - name: Push image
+        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
         run: |
           gcloud components install beta --quiet
           gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }} --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
