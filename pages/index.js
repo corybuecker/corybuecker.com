@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import PostPreview from "../components/post_preview";
-import Post from "../components/post";
-import Header from "../components/header";
-import pages from "../src/content.json";
-import Head from "next/head";
-import "../stylesheets/minima-classic.scss";
+import React, { useEffect } from 'react'
+import PostPreview from '../components/post_preview'
+import Post from '../components/post'
+import Header from '../components/header'
+import pages from '../src/content.json'
+import Head from 'next/head'
+import '../stylesheets/minima-classic.scss'
 
 const renderPreview = (page, index) => {
   return (
@@ -16,8 +16,8 @@ const renderPreview = (page, index) => {
         published={page.attributes.published}
       ></PostPreview>
     </div>
-  );
-};
+  )
+}
 
 const renderPost = page => {
   return (
@@ -32,13 +32,13 @@ const renderPost = page => {
         published={page.attributes.published}
       ></Post>
     </div>
-  );
-};
+  )
+}
 
 const Home = () => {
   useEffect(() => {
-    fetch("https://analytics.corybuecker.com");
-  }, []);
+    fetch('https://analytics.corybuecker.com')
+  }, [])
 
   return (
     <div>
@@ -46,12 +46,12 @@ const Home = () => {
       <main className="page-content" aria-label="Content">
         <div className="wrapper">
           {pages.map((page, index) => {
-            return index === 0 ? renderPost(page) : renderPreview(page, index);
+            return index === 0 ? renderPost(page) : renderPreview(page, index)
           })}
         </div>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
