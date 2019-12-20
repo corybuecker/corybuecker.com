@@ -6,7 +6,7 @@ draft: false
 preview: Placeholder
 ---
 
-In [a previous post](https://corybuecker.com/post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run/), I setup up a Cloud Run service to host a static site with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
+In [a previous post](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run), I setup up a Cloud Run service to host a static site with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
 
 ## Initialize Container Registry storage
 
