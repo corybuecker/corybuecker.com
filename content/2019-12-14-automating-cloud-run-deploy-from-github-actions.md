@@ -6,7 +6,7 @@ draft: false
 preview: Placeholder
 ---
 
-In [a previous post](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run), I setup up a Cloud Run service to host a static site with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
+In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
 
 ## Initialize Container Registry storage
 
@@ -27,7 +27,7 @@ Under IAM & admin > Roles, create a new custom role. Assign the role the followi
 - run.services.list
 - run.services.update
 
-![](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_custom_role.png)
+![Create a custom role](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_custom_role.png)
 
 ## Create a service account
 
@@ -37,7 +37,7 @@ In order to make things a _bit_ more convenient I am sharing a single service ac
 
 Under IAM & admin > Service accounts, create a new service account. Be sure create a JSON key at the end before saving the service account.
 
-![](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_service_account_key.png)
+![Create a service account](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_service_account_key.png)
 
 It is a good idea to load the service account locally to test the following steps.
 
@@ -51,7 +51,7 @@ If you need to switch back to your primary user run this command.
 
 Under IAM & admin > IAM, add a permission to the service account. Specficially, assign the custom role to the new service account.
 
-![](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/assign_service_account_role.png)
+![Assign service account role](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/assign_service_account_role.png)
 
 ## Assign Container Registry bucket permissions
 
@@ -59,7 +59,7 @@ Under Storage > Browser, click on the bucket containing the Docker images. It is
 
 Go to the Permissions tab and click Add members. Find the service account created earlier and add the Storage Admin permission to this bucket.
 
-![](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/add_bucket_permissions.png)
+![Add bucket permissions](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/add_bucket_permissions.png)
 
 Confirm that the role can push to the registry.
 
@@ -73,7 +73,7 @@ However, we have to allow the Github Actions service account to [act as itself i
 
 Under IAM & admin > Service accounts, click on the new service account. On the right side of the page, click Add Member. Enter the service account identifier and add the Service Accounts > Service Account User role.
 
-![](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/act_as_self.png)
+![Act as self](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/act_as_self.png)
 
 ## Deploy to Cloud Run
 

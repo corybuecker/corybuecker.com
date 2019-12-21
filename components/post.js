@@ -15,9 +15,6 @@ const Post = ({ title, published, body, path }) => {
       <div>
         <Markdown source={body}></Markdown>
       </div>
-      <Link href="/post/[slug]" as={`/post/${path}`}>
-        <a hidden=""></a>
-      </Link>
     </article>
   )
 }
