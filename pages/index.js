@@ -46,9 +46,13 @@ const Home = () => {
         <div className="content">
           <Header></Header>
           <main>
-            {pages.map((page, index) => {
-              return index === 0 ? renderPost(page) : renderPreview(page, index)
-            })}
+            <div className="wrapper">
+              {pages.map((page, index) => {
+                return index === 0
+                  ? renderPost(page)
+                  : renderPreview(page, index)
+              })}
+            </div>
           </main>
         </div>
       </div>

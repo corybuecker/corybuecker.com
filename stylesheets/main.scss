@@ -29,20 +29,23 @@ pre {
     flex-grow: 1;
     flex-basis: 7rem;
 
-    margin-left: 1.5rem;
-    nav {
-      text-align: center;
-      white-space: nowrap;
+    .wrapper {
+      margin-left: 1.5rem;
 
-      .home {
-        display: block;
-        margin-bottom: 1rem;
-        text-decoration: none;
-        color: #000000;
-        font-size: x-large;
+      nav {
+        text-align: center;
+        white-space: nowrap;
 
-        &:hover {
-          text-decoration: underline;
+        .home {
+          display: block;
+          margin-bottom: 1rem;
+          text-decoration: none;
+          color: #000000;
+          font-size: x-large;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -51,7 +54,10 @@ pre {
   main {
     flex-grow: 5;
     flex-basis: 35rem;
-    margin-right: 1.5rem;
-    margin-left: 1.5rem;
+
+    .wrapper {
+      margin-right: 1.5rem;
+      margin-left: 1.5rem;
+    }
   }
 }
