@@ -4,30 +4,18 @@ import Link from 'next/link'
 
 const PostPreview = ({ title, published, body, path }) => {
   return (
-    <article
-      className="post h-entry"
-      itemScope=""
-      itemType="http://schema.org/BlogPosting"
-    >
-      <header className="post-header">
-        <h1 className="post-title p-name" itemProp="name headline">
-          {title}
-        </h1>
-        <p className="post-meta">
-          <time
-            className="dt-published"
-            dateTime={published}
-            itemProp="datePublished"
-          >
+    <article>
+      <header>
+        <h1>{title}</h1>
+        <p>
+          <time dateTime={published}>
             {new Date(published).toLocaleDateString()}
           </time>
         </p>
       </header>
-      <div className="post-content e-content" itemProp="articleBody">
-        {body}
-      </div>
+      <div>{body}</div>
       <Link href="/post/[slug]" as={`/post/${path}`}>
-        <a className="u-url">Read full post</a>
+        <a>Read full post</a>
       </Link>
     </article>
   )

@@ -4,24 +4,24 @@ import Post from '../components/post'
 import Header from '../components/header'
 import pages from '../src/content.json'
 import Head from 'next/head'
-import '../stylesheets/minima-classic.scss'
+import '../stylesheets/main.scss'
 
 const renderPreview = (page, index) => {
   return (
-    <div key={index}>
+    <article key={index}>
       <PostPreview
         body={page.attributes.preview}
         path={page.path}
         title={page.attributes.title}
         published={page.attributes.published}
       ></PostPreview>
-    </div>
+    </article>
   )
 }
 
 const renderPost = page => {
   return (
-    <div key={0}>
+    <article key={0}>
       <Head>
         <title>{page.attributes.title} - Cory Buecker</title>
       </Head>
@@ -31,7 +31,7 @@ const renderPost = page => {
         title={page.attributes.title}
         published={page.attributes.published}
       ></Post>
-    </div>
+    </article>
   )
 }
 
@@ -42,14 +42,16 @@ const Home = () => {
 
   return (
     <div>
-      <Header></Header>
-      <main className="page-content" aria-label="Content">
-        <div className="wrapper">
-          {pages.map((page, index) => {
-            return index === 0 ? renderPost(page) : renderPreview(page, index)
-          })}
+      <div className="container">
+        <div className="content">
+          <Header></Header>
+          <main>
+            {pages.map((page, index) => {
+              return index === 0 ? renderPost(page) : renderPreview(page, index)
+            })}
+          </main>
         </div>
-      </main>
+      </div>
     </div>
   )
 }
