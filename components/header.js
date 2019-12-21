@@ -1,10 +1,13 @@
 import React from 'react'
+import Link from 'next/link'
 
 const Header = () => {
   return (
     <header>
       <nav>
-        <a href="/">Cory Buecker</a>
+        <Link href="/">
+          <a className="home">Cory Buecker</a>
+        </Link>
         <div>
           <a href="https://www.linkedin.com/in/corybuecker/">LinkedIn</a>
           <br />
