@@ -5,29 +5,29 @@ import Link from 'next/link'
 const Post = ({ title, published, body, path }) => {
   return (
     <article
-      className='post h-entry'
-      itemScope=''
-      itemType='http://schema.org/BlogPosting'
+      className="post h-entry"
+      itemScope=""
+      itemType="http://schema.org/BlogPosting"
     >
-      <header className='post-header'>
-        <h1 className='post-title p-name' itemProp='name headline'>
+      <header className="post-header">
+        <h1 className="post-title p-name" itemProp="name headline">
           {title}
         </h1>
-        <p className='post-meta'>
+        <p className="post-meta">
           <time
-            className='dt-published'
+            className="dt-published"
             dateTime={published}
-            itemProp='datePublished'
+            itemProp="datePublished"
           >
             {new Date(published).toLocaleDateString()}
           </time>
         </p>
       </header>
-      <div className='post-content e-content' itemProp='articleBody'>
+      <div className="post-content e-content" itemProp="articleBody">
         <Markdown source={body}></Markdown>
       </div>
-      <Link href={`/post/${path}`} prefetch={false}>
-        <a className='u-url' hidden=''></a>
+      <Link href="/post/[slug]" as={`/post/${path}`}>
+        <a className="u-url" hidden=""></a>
       </Link>
     </article>
   )
