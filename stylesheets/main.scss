@@ -17,21 +17,17 @@ pre {
 }
 
 .container {
-  padding: 1rem;
-
   .content {
     display: flex;
-    margin: -2rem;
     flex-wrap: wrap;
   }
 
   header {
     flex-grow: 1;
     flex-basis: 7rem;
+    padding: 1rem;
 
     .wrapper {
-      margin: 2rem;
-
       nav {
         text-align: center;
         white-space: nowrap;
@@ -54,10 +50,9 @@ pre {
   main {
     flex-grow: 5;
     flex-basis: 35rem;
+    padding: 1rem;
 
     .wrapper {
-      margin: 2rem;
-
       div:first-of-type {
         h1 {
           margin-top: 0;

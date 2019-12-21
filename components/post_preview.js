@@ -5,14 +5,13 @@ import Link from 'next/link'
 const PostPreview = ({ title, published, body, path }) => {
   return (
     <article>
-      <header>
-        <h1>{title}</h1>
-        <p>
-          <time dateTime={published}>
-            {new Date(published).toLocaleDateString()}
-          </time>
-        </p>
-      </header>
+      <h1>{title}</h1>
+      <p>
+        <time dateTime={published}>
+          {new Date(published).toLocaleDateString()}
+        </time>
+      </p>
+
       <div>{body}</div>
       <Link href="/post/[slug]" as={`/post/${path}`}>
         <a>Read full post</a>

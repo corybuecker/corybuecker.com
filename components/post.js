@@ -5,14 +5,13 @@ import Link from 'next/link'
 const Post = ({ title, published, body, path }) => {
   return (
     <article>
-      <header>
-        <h1>{title}</h1>
-        <p>
-          <time dateTime={published}>
-            {new Date(published).toLocaleDateString()}
-          </time>
-        </p>
-      </header>
+      <h1>{title}</h1>
+      <p>
+        <time dateTime={published}>
+          {new Date(published).toLocaleDateString()}
+        </time>
+      </p>
+
       <div>
         <Markdown source={body}></Markdown>
       </div>
