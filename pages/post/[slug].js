@@ -26,13 +26,15 @@ const PostBySlug = post => {
           <Header></Header>
           <main>
             <div className="wrapper">
-              <Post
-                key="1"
-                body={post.body}
-                path={post.path}
-                title={post.attributes.title}
-                published={post.attributes.published}
-              ></Post>
+              <div>
+                <Post
+                  key="1"
+                  body={post.body}
+                  path={post.path}
+                  title={post.attributes.title}
+                  published={post.attributes.published}
+                ></Post>
+              </div>
             </div>
           </main>
         </div>

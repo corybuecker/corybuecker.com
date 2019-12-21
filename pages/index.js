@@ -8,20 +8,20 @@ import '../stylesheets/main.scss'
 
 const renderPreview = (page, index) => {
   return (
-    <article key={index}>
+    <div key={index}>
       <PostPreview
         body={page.attributes.preview}
         path={page.path}
         title={page.attributes.title}
         published={page.attributes.published}
       ></PostPreview>
-    </article>
+    </div>
   )
 }
 
 const renderPost = page => {
   return (
-    <article key={0}>
+    <div key={0}>
       <Head>
         <title>{page.attributes.title} - Cory Buecker</title>
       </Head>
@@ -31,7 +31,7 @@ const renderPost = page => {
         title={page.attributes.title}
         published={page.attributes.published}
       ></Post>
-    </article>
+    </div>
   )
 }
 
