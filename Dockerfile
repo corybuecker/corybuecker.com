@@ -1,13 +1,13 @@
 FROM node:13.2-alpine AS builder
 
-COPY package.json package-lock.json /app/
-WORKDIR /app
+COPY package.json package-lock.json /build/
+WORKDIR /build
 RUN npm install
-
-COPY . /app
+COPY . /build
 
 ENV NODE_ENV=production
+RUN npm run export
 
-RUN npm run build
-
-CMD ["npm", "run", "server"]
+FROM nginx:mainline-alpine
+COPY --from=builder /build/out /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf 
