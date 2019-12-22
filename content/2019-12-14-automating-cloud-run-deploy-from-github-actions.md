@@ -1,9 +1,9 @@
 ---
 title: Automating a Cloud Run deploy from Github Actions, part 1
 drafted: 2019-12-14
-published: 2019-12-19
+published: 2019-12-19 12:00
 draft: false
-preview: Placeholder
+preview: Use Github Actions to automate the building and deployment of each change to a repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
 ---
 
 In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
@@ -19,7 +19,7 @@ In order to avoid assigning a Storage Admin or bucket creation permission to the
 
 ## Create a custom role
 
-Under IAM & admin > Roles, create a new custom role. Assign the role the following permissions for the Container Registry and Cloud Run:
+Create a new role and assign the role the following permissions for the Container Registry and Cloud Run:
 
 - storage.buckets.get
 - run.services.create
@@ -27,7 +27,15 @@ Under IAM & admin > Roles, create a new custom role. Assign the role the followi
 - run.services.list
 - run.services.update
 
-![Create a custom role](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_custom_role.png)
+
+    gcloud iam roles create github_actions \
+        --project=PROJECT-ID \
+        --title="Github Actions"
+
+    gcloud iam roles update github_actions \
+        --project=PROJECT-ID \
+        --stage=GA \
+        --permissions=storage.buckets.get,run.services.create,run.services.get,run.services.list,run.services.update
 
 ## Create a service account
 

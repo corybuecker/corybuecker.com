@@ -1,7 +1,7 @@
 ---
 title: An introduction
 drafted: 2019-11-30
-published: 2019-11-30
+published: 2019-11-30 12:00
 draft: false
 preview: I have wanted to start a blog for some time now. I like to think there are several reasons.
 ---

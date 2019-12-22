@@ -24,6 +24,7 @@ const renderPost = page => {
     <div key={0}>
       <Head>
         <title>{page.attributes.title} - Cory Buecker</title>
+        <meta name="description" content={page.attributes.preview} />
       </Head>
       <Post
         body={page.body}

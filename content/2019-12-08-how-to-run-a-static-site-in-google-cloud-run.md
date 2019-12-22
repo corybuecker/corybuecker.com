@@ -1,7 +1,7 @@
 ---
 title: How to run a static site in Google Cloud Run
 drafted: 2019-12-08
-published: 2019-12-08
+published: 2019-12-08 12:00
 draft: false
 preview: Originally, I wanted to run this site in a Google Cloud Storage bucket. However, I wanted to have more control over some of the load balancer settings. Specifically, Cloud Storage buckets do not allow HTTPS unless the bucket is fronted by a Google Load Balancer or a third-party CDN. The simplest solution that also yields a significant amount of control is hosting via Google Cloud Run. Cloud Run is an inexpensive stateless container platform. It performs automatic HTTP to HTTPS redirect (without HSTS, see below) and it's trivial to run a custom NGINX image.
 ---
