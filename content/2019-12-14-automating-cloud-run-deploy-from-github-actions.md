@@ -1,7 +1,8 @@
 ---
 title: Automating a Cloud Run deploy from Github Actions, part 1
 drafted: 2019-12-14
-published: 2019-12-19 12:00
+published: 2019-12-19T09:00:00Z
+revised: 2019-12-22T11:53:16Z
 draft: false
 preview: Use Github Actions to automate the building and deployment of each change to a repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
 ---

@@ -1,22 +1,24 @@
 import Markdown from 'react-markdown'
 import React from 'react'
 import PropTypes from 'prop-types'
+import Image from './image'
 
-const Image = ({ alt, src }) => {
+const Revised = ({ revised }) => {
+  if (revised === undefined) return null
+
   return (
-    <picture>
-      <source srcSet={`${src}.webp`} type="image/webp" alt={alt} />
-      <source srcSet={src} type="image/png" alt={alt} />
-      <img src={src} alt={alt} />
-    </picture>
+    <span>
+      &nbsp; (Revised:&nbsp;
+      <time dateTime={revised}>{new Date(revised).toLocaleDateString()}</time>)
+    </span>
   )
 }
-Image.propTypes = {
-  alt: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired
+
+Revised.propTypes = {
+  revised: PropTypes.string
 }
 
-const Post = ({ title, published, body, path }) => {
+const Post = ({ title, published, body, revised }) => {
   return (
     <article>
       <h1>{title}</h1>
@@ -24,6 +26,7 @@ const Post = ({ title, published, body, path }) => {
         <time dateTime={published}>
           {new Date(published).toLocaleDateString()}
         </time>
+        <Revised revised={revised}></Revised>
       </p>
 
       <div>
@@ -36,8 +39,8 @@ const Post = ({ title, published, body, path }) => {
 Post.propTypes = {
   title: PropTypes.string.isRequired,
   published: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired
+  revised: PropTypes.string,
+  body: PropTypes.string.isRequired
 }
 
 export default Post

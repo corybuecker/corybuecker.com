@@ -30,9 +30,9 @@ const PostBySlug = post => {
                 <Post
                   key="1"
                   body={post.body}
-                  path={post.path}
                   title={post.attributes.title}
                   published={post.attributes.published}
+                  revised={post.attributes.revised}
                 ></Post>
               </div>
             </div>

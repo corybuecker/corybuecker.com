@@ -31,6 +31,7 @@ const renderPost = page => {
         path={page.path}
         title={page.attributes.title}
         published={page.attributes.published}
+        revised={page.attributes.revised}
       ></Post>
     </div>
   )

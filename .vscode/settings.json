@@ -4,5 +4,8 @@
   "search.useGlobalIgnoreFiles": true,
   "editor.wordWrap": "on",
   "editor.renderWhitespace": "all",
-  "eslint.run": "onSave"
+  "eslint.run": "onSave",
+  "insertDateString.format": "iso",
+  "insertDateString.formatDate": "iso",
+  "insertDateString.formatTime": "iso"
 }
