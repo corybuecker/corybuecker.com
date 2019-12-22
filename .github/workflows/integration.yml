@@ -1,0 +1,38 @@
+name: Build and deploy integration to Cloud Run
+
+on:
+  push:
+    branches:
+      - integration
+
+env:
+  CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
+  CLOUDSDK_RUN_PLATFORM: managed
+  CLOUDSDK_RUN_REGION: us-central1
+
+jobs:
+  build-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+
+      - name: Build image
+        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
+
+      - name: Push image
+        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+
+      - name: Install beta components
+        run: gcloud components install beta --quiet
+
+      - name: Deploy to Cloud Run
+        run: gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }}
