@@ -1,6 +1,5 @@
 ---
 title: Automating a Cloud Run deploy from Github Actions, part 1
-drafted: 2019-12-14
 published: 2019-12-19T09:00:00Z
 revised: 2019-12-22T17:35:22Z
 draft: false

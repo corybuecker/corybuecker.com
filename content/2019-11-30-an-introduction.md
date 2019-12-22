@@ -1,6 +1,5 @@
 ---
 title: An introduction
-drafted: 2019-11-30
 published: 2019-11-30 12:00:00-0500
 revised: 2019-12-22T12:02:15Z
 draft: false

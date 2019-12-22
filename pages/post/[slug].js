@@ -20,6 +20,7 @@ const PostBySlug = post => {
     <div>
       <Head>
         <title>{post.attributes.title} - Cory Buecker</title>
+        <meta name="description" content={post.attributes.preview} />
       </Head>
       <div className="container">
         <div className="content">

@@ -1,8 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent } from 'react'
 import Link from 'next/link'
 
-const PostPreview = ({ title, published, body, path }) => {
+type PostPreviewProps = {
+  title: string
+  published: string
+  body: string
+  path: string
+}
+
+const PostPreview: FunctionComponent<PostPreviewProps> = ({
+  title,
+  published,
+  body,
+  path
+}) => {
   return (
     <article>
       <h1>
@@ -18,13 +29,6 @@ const PostPreview = ({ title, published, body, path }) => {
       <div>{body}</div>
     </article>
   )
-}
-
-PostPreview.propTypes = {
-  title: PropTypes.string.isRequired,
-  published: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired
 }
 
 export default PostPreview
