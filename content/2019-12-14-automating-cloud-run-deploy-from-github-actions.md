@@ -2,7 +2,7 @@
 title: Automating a Cloud Run deploy from Github Actions, part 1
 drafted: 2019-12-14
 published: 2019-12-19T09:00:00Z
-revised: 2019-12-22T11:53:16Z
+revised: 2019-12-22T17:35:22Z
 draft: false
 preview: Use Github Actions to automate the building and deployment of each change to a repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
 ---
@@ -44,9 +44,43 @@ Google recommends using the [principle of least privilege](https://en.wikipedia.
 
 In order to make things a _bit_ more convenient I am sharing a single service account for both the Container Registry and Cloud Run services. If you prefer, an alternative is to use two service accounts and two jobs in Github Actions to separate the permissions. My rationale is that a data breach in Github would likely expose both service account keys anyway.
 
-Under IAM & admin > Service accounts, create a new service account. Be sure create a JSON key at the end before saving the service account.
+Create the dedicated service account.
 
-![Create a service account](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/create_a_service_account_key.png)
+    gcloud iam service-accounts create github-actions \
+        --display-name="Github Actions"
+
+Create and download a service account key file.
+
+    gcloud iam service-accounts keys create github_actions_key.json \
+        --iam-account=github-actions@PROJECT_ID.iam.gserviceaccount.com
+
+## Assign the custom role
+
+Now that the service account and custom role have been created, it is time to assign the custom role to the new service account.
+
+    gcloud projects add-iam-policy-binding PROJECT_ID \
+        --member serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com \
+        --role projects/PROJECT_ID/roles/github_actions
+
+## Assign Container Registry bucket permissions
+
+Under Storage > Browser, find the bucket containing the Docker images. It is usually a bucket whose name starts with `artifacts`.
+
+Add the Storage Admin permission for this bucket to the service account created earlier. This will allow that service account to push Docker images into the Storage used by Cloud Registry.
+
+    gsutil iam ch serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com:roles/storage.admin gs://BUCKET_NAME
+
+## Allow service account to act as itself
+
+This was an unusual step required by Cloud Run. Cloud Run uses a [provided service account](https://cloud.google.com/run/docs/securing/service-identity?hl=en#runtime_service_account) as its identity when running a service. This is a great feature to limit the access of the running container.
+
+However, we have to allow the Github Actions service account to [act as itself in order to deploy a service it will be running](https://cloud.google.com/run/docs/reference/iam/roles#additional-configuration).
+
+    gcloud iam service-accounts add-iam-policy-binding github-actions@PROJECT_ID.iam.gserviceaccount.com \
+        --member="serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com" \
+        --role="roles/iam.serviceAccountUser"
+
+## Deploy to Cloud Run
 
 It is a good idea to load the service account locally to test the following steps.
 
@@ -55,37 +89,7 @@ It is a good idea to load the service account locally to test the following step
 If you need to switch back to your primary user run this command.
 
     gcloud config set account user@example.com
-
-## Assign the custom role
-
-Under IAM & admin > IAM, add a permission to the service account. Specficially, assign the custom role to the new service account.
-
-![Assign service account role](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/assign_service_account_role.png)
-
-## Assign Container Registry bucket permissions
-
-Under Storage > Browser, click on the bucket containing the Docker images. It is usually a bucket whose name starts with `artifacts`.
-
-Go to the Permissions tab and click Add members. Find the service account created earlier and add the Storage Admin permission to this bucket.
-
-![Add bucket permissions](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/add_bucket_permissions.png)
-
-Confirm that the role can push to the registry.
-
-    docker push gcr.io/PROJECT-ID/hello-world:latest
-
-## Allow service account to act as itself
-
-This was an unusual step required by Cloud Run. Cloud Run uses a [provided service account](https://cloud.google.com/run/docs/securing/service-identity?hl=en#runtime_service_account) as its identity when running a service. This is a great feature to limit the access of the running container.
-
-However, we have to allow the Github Actions service account to [act as itself in order to deploy a service it will be running](https://cloud.google.com/run/docs/reference/iam/roles#additional-configuration).
-
-Under IAM & admin > Service accounts, click on the new service account. On the right side of the page, click Add Member. Enter the service account identifier and add the Service Accounts > Service Account User role.
-
-![Act as self](posts/2019-12-14-automating-cloud-run-deploy-from-github-actions/act_as_self.png)
-
-## Deploy to Cloud Run
-
+    
 At this point you can deploy to Cloud Run with the new service account.
 
     gcloud run deploy nginx \
