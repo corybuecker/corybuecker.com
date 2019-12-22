@@ -10,9 +10,9 @@ const Header = () => {
             <a className="home">Cory Buecker</a>
           </Link>
           <div>
-            <a href="https://www.linkedin.com/in/corybuecker/">LinkedIn</a>
-            <br />
             <a href="https://github.com/corybuecker">Github</a>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            <a href="https://www.linkedin.com/in/corybuecker/">LinkedIn</a>
           </div>
         </nav>
       </div>
