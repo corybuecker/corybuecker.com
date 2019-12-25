@@ -14,6 +14,7 @@ const renderPreview = (page, index) => {
         path={page.path}
         title={page.attributes.title}
         published={page.attributes.published}
+        revised={page.attributes.revised}
       ></PostPreview>
     </div>
   )

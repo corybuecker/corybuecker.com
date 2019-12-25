@@ -11,13 +11,14 @@ markdownPages.forEach(pagePath => {
     fs.readFileSync(path.join(process.cwd(), 'content', pagePath), 'utf-8')
   )
 
-  contents.path = pagePath.replace('.md', '')
-
+  contents.path = pagePath.replace('.md', '').replace(/^[0-9]{3}\-/, '')
   compiledPages.push(contents)
 })
 
 const publishedCompiledPages = compiledPages
-  .filter(page => !page.attributes.draft)
+  .filter(
+    page => !page.attributes.draft || process.env.NODE_ENV !== 'production'
+  )
   .reverse()
 
 console.log(publishedCompiledPages.map(page => page.attributes.title))

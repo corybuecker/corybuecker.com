@@ -1,18 +1,22 @@
 import React, { FunctionComponent } from 'react'
 import Link from 'next/link'
+import Markdown from 'react-markdown'
+import Revised from './revised'
 
 type PostPreviewProps = {
   title: string
   published: string
   body: string
   path: string
+  revised: string
 }
 
 const PostPreview: FunctionComponent<PostPreviewProps> = ({
   title,
   published,
   body,
-  path
+  path,
+  revised
 }) => {
   return (
     <article>
@@ -25,8 +29,11 @@ const PostPreview: FunctionComponent<PostPreviewProps> = ({
         <time dateTime={published}>
           {new Date(published).toLocaleDateString()}
         </time>
+        <Revised revised={revised}></Revised>
       </p>
-      <div>{body}</div>
+      <div>
+        <Markdown source={body}></Markdown>
+      </div>
     </article>
   )
 }

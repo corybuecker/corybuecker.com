@@ -1,16 +1,18 @@
 ---
 title: Automating a Cloud Run deploy from Github Actions, part 1
 published: 2019-12-19T09:00:00Z
-revised: 2019-12-22T17:35:22Z
+revised: 2019-12-27T13:54:13Z
 draft: false
-preview: Use Github Actions to automate the building and deployment of each change to a repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
+preview: In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 ---
 
-In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX image. Because the underlying Next.js project is hosted in Github, I can use Github Actions to automate the building and deployment of each change to the repository. This requires a little extra work to setup permissions for Github Actions to access Google's Container Registry and Cloud Run service.
+In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. 
+
+Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 
 ## Initialize Container Registry storage
 
-In order to avoid assigning a Storage Admin or bucket creation permission to the service account, I first pushed a single image to Container Registry to ensure the Cloud Storage bucket exists.
+Push a simple image to Container Registry to create the Cloud Storage bucket. This avoids assignment of bucket administration permissions to the service account.
 
     gcloud auth configure-docker
     docker pull hello-world
@@ -99,3 +101,7 @@ At this point you can deploy to Cloud Run with the new service account.
         --allow-unauthenticated
 
 In part 2, I will connect the new service account to Github Actions.
+
+_Revision note (2019-12-27)_
+
+The service account does not have permission to allow unauthenticated access to Cloud Run services. I'll investigate further. The easiest workaround for the moment is to use the project owner user to deploy the service the first time. This only has to be done once, and the permission will remain on each subsequent deploy by the service account.
