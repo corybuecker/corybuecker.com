@@ -4,6 +4,7 @@ type ImageProps = {
   src: string
   alt?: string
 }
+
 const Image: FunctionComponent<ImageProps> = ({ alt, src }) => {
   return (
     <picture>

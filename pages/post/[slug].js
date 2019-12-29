@@ -13,7 +13,12 @@ const postsBySlug = posts.reduce((p, post) => {
 
 const PostBySlug = post => {
   useEffect(() => {
-    fetch('https://analytics.corybuecker.com')
+    const analyticsUrl = new URL('https://analytics.corybuecker.com')
+    const pageUrl = new URL(window.location.toString())
+
+    analyticsUrl.search = `page=${pageUrl.pathname}`
+
+    fetch(analyticsUrl.toString())
   }, [])
 
   return (

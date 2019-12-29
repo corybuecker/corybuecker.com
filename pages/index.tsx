@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, FunctionComponent } from 'react'
 import PostPreview from '../components/post_preview'
 import Post from '../components/post'
 import Header from '../components/header'
@@ -6,7 +6,26 @@ import pages from '../src/content.json'
 import Head from 'next/head'
 import '../stylesheets/main.scss'
 
-const renderPreview = (page, index) => {
+type pageProps = {
+  path: string
+  body: string
+  attributes: {
+    preview: string
+    title: string
+    published: string
+    revised?: string
+  }
+}
+
+type renderPreviewProps = {
+  page: pageProps
+  index: number
+}
+
+const renderPreview: FunctionComponent<renderPreviewProps> = ({
+  page,
+  index
+}) => {
   return (
     <div key={index}>
       <PostPreview
@@ -20,7 +39,11 @@ const renderPreview = (page, index) => {
   )
 }
 
-const renderPost = page => {
+type renderPostProps = {
+  page: pageProps
+}
+
+const renderPost: FunctionComponent<renderPostProps> = ({ page }) => {
   return (
     <div key={0}>
       <Head>
@@ -29,7 +52,6 @@ const renderPost = page => {
       </Head>
       <Post
         body={page.body}
-        path={page.path}
         title={page.attributes.title}
         published={page.attributes.published}
         revised={page.attributes.revised}
@@ -40,7 +62,12 @@ const renderPost = page => {
 
 const Home = () => {
   useEffect(() => {
-    fetch('https://analytics.corybuecker.com')
+    const analyticsUrl = new URL('https://analytics.corybuecker.com')
+    const pageUrl = new URL(window.location.toString())
+
+    analyticsUrl.search = `page=${pageUrl.pathname}`
+
+    fetch(analyticsUrl.toString())
   }, [])
 
   return (
@@ -52,8 +79,8 @@ const Home = () => {
             <div className="wrapper">
               {pages.map((page, index) => {
                 return index === 0
-                  ? renderPost(page)
-                  : renderPreview(page, index)
+                  ? renderPost({ page })
+                  : renderPreview({ page, index })
               })}
             </div>
           </main>

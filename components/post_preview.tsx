@@ -8,7 +8,7 @@ type PostPreviewProps = {
   published: string
   body: string
   path: string
-  revised: string
+  revised?: string
 }
 
 const PostPreview: FunctionComponent<PostPreviewProps> = ({
