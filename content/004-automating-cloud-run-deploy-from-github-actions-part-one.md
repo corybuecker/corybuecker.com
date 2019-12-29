@@ -3,10 +3,10 @@ title: Automating a Cloud Run deploy from Github Actions, part 1
 published: 2019-12-19T09:00:00Z
 revised: 2019-12-27T13:54:13Z
 draft: false
-preview: In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
+preview: In a previous post, I [setup up a Cloud Run service to host a static site](post/how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 ---
 
-In a previous post, I [setup up a Cloud Run service to host a static site](post/2019-12-08-how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. 
+In a previous post, I [setup up a Cloud Run service to host a static site](post/how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. 
 
 Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 
