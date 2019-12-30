@@ -5,6 +5,7 @@ import Head from 'next/head'
 
 import posts from '../../src/content.json'
 import '../../stylesheets/main.scss'
+import recordPageview from '../../src/utils/analytics'
 
 const postsBySlug = posts.reduce((p, post) => {
   p[post.path] = post
@@ -13,12 +14,7 @@ const postsBySlug = posts.reduce((p, post) => {
 
 const PostBySlug = post => {
   useEffect(() => {
-    const analyticsUrl = new URL('https://analytics.corybuecker.com')
-    const pageUrl = new URL(window.location.toString())
-
-    analyticsUrl.search = `page=${pageUrl.pathname}`
-
-    fetch(analyticsUrl.toString())
+    recordPageview()
   }, [])
 
   return (

@@ -9,7 +9,7 @@ I had a couple of requirements in mind when starting this site. First, I wanted 
 
 [Next.js](https://nextjs.org/docs) provides these feature and is popular in the React community. There are a couple of extra steps to take when building a static site with transpiled Markdown content.
 
-If you prefer to see the code for this blog, it is [hosted on Github](https://github.com/corybuecker/blog).
+If you prefer to see the code for this blog, it is [hosted on GitHub](https://github.com/corybuecker/blog).
 
 ## Setup the project
 

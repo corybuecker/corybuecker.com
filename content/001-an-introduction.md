@@ -10,4 +10,4 @@ I have wanted to start this blog for some time now. I like to think there are se
 
 I would like to improving my writing and communication skills. Writing about personal projects increases my accountability and motivation.
 
-For now, I'll say "Hi" and link to my [Github](https://github.com/corybuecker) and [LinkedIn](https://www.linkedin.com/in/corybuecker) profiles.
+For now, I'll say "Hi" and link to my [GitHub](https://github.com/corybuecker) and [LinkedIn](https://www.linkedin.com/in/corybuecker) profiles.

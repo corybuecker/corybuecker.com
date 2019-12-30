@@ -1,14 +1,14 @@
 ---
-title: Automating a Cloud Run deploy from Github Actions, part 1
+title: Automating a Cloud Run deploy from GitHub Actions, part 1
 published: 2019-12-19T09:00:00Z
 revised: 2019-12-27T13:54:13Z
 draft: false
-preview: In a previous post, I [setup up a Cloud Run service to host a static site](post/how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
+preview: In a previous post, I [setup up a Cloud Run service to host a static site](post/how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. GitHub hosts the underlying Next.js project. GitHub Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 ---
 
 In a previous post, I [setup up a Cloud Run service to host a static site](post/how-to-run-a-static-site-in-google-cloud-run) with an NGINX-based Docker image. 
 
-Github hosts the underlying Next.js project. Github Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
+GitHub hosts the underlying Next.js project. GitHub Actions can automate building and deploying each change to the repository. This requires a little extra work to setup permissions to for Google's Container Registry and Cloud Run services.
 
 ## Initialize Container Registry storage
 
@@ -32,7 +32,7 @@ Create a new role and assign the role the following permissions for the Containe
 
     gcloud iam roles create github_actions \
         --project=PROJECT-ID \
-        --title="Github Actions"
+        --title="GitHub Actions"
 
     gcloud iam roles update github_actions \
         --project=PROJECT-ID \
@@ -43,12 +43,12 @@ Create a new role and assign the role the following permissions for the Containe
 
 Google recommends using the [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when [assigning a service account to run a particular Cloud Run service](https://cloud.google.com/run/docs/securing/service-identity).
 
-In order to make things a _bit_ more convenient I am sharing a single service account for both the Container Registry and Cloud Run services. If you prefer, an alternative is to use two service accounts and two jobs in Github Actions to separate the permissions. My rationale is that a data breach in Github would likely expose both service account keys anyway.
+In order to make things a _bit_ more convenient I am sharing a single service account for both the Container Registry and Cloud Run services. If you prefer, an alternative is to use two service accounts and two jobs in GitHub Actions to separate the permissions. My rationale is that a data breach in GitHub would likely expose both service account keys anyway.
 
 Create the dedicated service account.
 
     gcloud iam service-accounts create github-actions \
-        --display-name="Github Actions"
+        --display-name="GitHub Actions"
 
 Create and download a service account key file.
 
@@ -75,7 +75,7 @@ Add the Storage Admin permission for this bucket to the service account created 
 
 This was an unusual step required by Cloud Run. Cloud Run uses a [provided service account](https://cloud.google.com/run/docs/securing/service-identity?hl=en#runtime_service_account) as its identity when running a service. This is a great feature to limit the access of the running container.
 
-However, we have to allow the Github Actions service account to [act as itself in order to deploy a service it will be running](https://cloud.google.com/run/docs/reference/iam/roles#additional-configuration).
+However, we have to allow the GitHub Actions service account to [act as itself in order to deploy a service it will be running](https://cloud.google.com/run/docs/reference/iam/roles#additional-configuration).
 
     gcloud iam service-accounts add-iam-policy-binding github-actions@PROJECT_ID.iam.gserviceaccount.com \
         --member="serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com" \
@@ -100,7 +100,7 @@ At this point you can deploy to Cloud Run with the new service account.
         --region us-central1 \
         --allow-unauthenticated
 
-In part 2, I will connect the new service account to Github Actions.
+In part 2, I will connect the new service account to GitHub Actions.
 
 _Revision note (2019-12-27)_
 

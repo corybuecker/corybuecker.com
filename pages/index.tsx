@@ -5,6 +5,7 @@ import Header from '../components/header'
 import pages from '../src/content.json'
 import Head from 'next/head'
 import '../stylesheets/main.scss'
+import recordPageview from '../src/utils/analytics'
 
 type pageProps = {
   path: string
@@ -62,12 +63,7 @@ const renderPost: FunctionComponent<renderPostProps> = ({ page }) => {
 
 const Home = () => {
   useEffect(() => {
-    const analyticsUrl = new URL('https://analytics.corybuecker.com')
-    const pageUrl = new URL(window.location.toString())
-
-    analyticsUrl.search = `page=${pageUrl.pathname}`
-
-    fetch(analyticsUrl.toString())
+    recordPageview()
   }, [])
 
   return (

@@ -1,37 +1,38 @@
 ---
-title: Automating a Cloud Run deploy from Github Actions, part 2
+title: Automating a Cloud Run deploy from GitHub Actions, part 2
 published: 2019-12-29T17:49:03Z
+revised: 2019-12-30T00:14:10Z
 draft: false
 preview: TBA
 ---
 
-With the service account set up, it's relatively simple to configure Github Actions to deploy when a branch is pushed.
+With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.
 
-## Create Github secrets
+## Create GitHub secrets
 
-Follow [Github's guide](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets) to create the following secrets:
+Follow [GitHub's guide](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets) to create the following secrets:
 
-`CLOUDSDK_CORE_PROJECT`
+&mdash;&nbsp;`CLOUDSDK_CORE_PROJECT`
 
 This is the Google project ID, not the project name. The easiest way to find this is by running:
 
     gcloud projects list
 
-`SERVICE_ACCOUNT_KEY`
+&mdash;&nbsp;`SERVICE_ACCOUNT_KEY`
 
-The JSON service account key must be base64 encoded before being stored in Github secrets.
+The JSON service account key must be base64 encoded before being stored in GitHub secrets.
 
     cat PATH_TO_SERVICE_KEY | base64
 
-`IMAGE_TAG`
+&mdash;&nbsp;`IMAGE_TAG`
 
 This can be anything and will be used to name the Docker image.
 
-`CLOUD_RUN_SERVICE`
+&mdash;&nbsp;`CLOUD_RUN_SERVICE`
 
 This can be anything and will be used by Cloud Run as the service name.
 
-`SERVICE_ACCOUNT`
+&mdash;&nbsp;`SERVICE_ACCOUNT`
 
 This is the email address of the service account created in part one.
 
@@ -76,4 +77,4 @@ In the repository, create a `main.yml` file in `.github/workflows`.
           - name: Deploy to Cloud Run
             run: gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }}
 
-On the next push to Github, the action will run.
+On the next push to GitHub, the action will run.
