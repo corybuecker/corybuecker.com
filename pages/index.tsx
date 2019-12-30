@@ -2,18 +2,20 @@ import React, { useEffect, FunctionComponent } from 'react'
 import PostPreview from '../components/post_preview'
 import Post from '../components/post'
 import Header from '../components/header'
-import pages from '../src/content.json'
 import Head from 'next/head'
-import '../stylesheets/main.scss'
+
+import pages from '../src/content.json'
 import recordPageview from '../src/utils/analytics'
+
+import '../stylesheets/main.scss'
 
 type pageProps = {
   path: string
   body: string
   attributes: {
-    preview: string
     title: string
     published: string
+    preview: string
     revised?: string
   }
 }

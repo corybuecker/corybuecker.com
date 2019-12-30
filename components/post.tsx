@@ -2,6 +2,7 @@ import Markdown from 'react-markdown'
 import React, { FunctionComponent } from 'react'
 import Image from './image'
 import Revised from './revised'
+import TrackedAnchor from './tracked_anchor'
 
 type PostProps = {
   title: string
@@ -27,7 +28,10 @@ const Post: FunctionComponent<PostProps> = ({
       </p>
 
       <div>
-        <Markdown source={body} renderers={{ image: Image }}></Markdown>
+        <Markdown
+          source={body}
+          renderers={{ image: Image, link: TrackedAnchor }}
+        ></Markdown>
       </div>
     </article>
   )

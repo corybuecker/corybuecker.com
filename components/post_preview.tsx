@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react'
-import Link from 'next/link'
 import Markdown from 'react-markdown'
 import Revised from './revised'
-
+import TrackedLink from './tracked_link'
 type PostPreviewProps = {
   title: string
   published: string
@@ -21,9 +20,9 @@ const PostPreview: FunctionComponent<PostPreviewProps> = ({
   return (
     <article>
       <h1>
-        <Link href="/post/[slug]" as={`/post/${path}`}>
-          <a>{title}</a>
-        </Link>
+        <TrackedLink href="/post/[slug]" as={`/post/${path}`}>
+          {title}
+        </TrackedLink>
       </h1>
       <p>
         <time dateTime={published}>

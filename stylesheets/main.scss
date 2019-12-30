@@ -45,7 +45,8 @@ pre {
             text-decoration: underline;
           }
         }
-        svg {
+        a > svg {
+          pointer-events: none;
           width: 24px;
           height: 24px;
         }
