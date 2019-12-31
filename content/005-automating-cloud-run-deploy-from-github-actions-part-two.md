@@ -3,7 +3,7 @@ title: Automating a Cloud Run deploy from GitHub Actions, part 2
 published: 2019-12-29T17:49:03Z
 revised: 2019-12-30T00:14:10Z
 draft: false
-preview: TBA
+preview: With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.
 ---
 
 With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.

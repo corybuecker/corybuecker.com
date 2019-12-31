@@ -16,7 +16,6 @@ module.exports = withSass({
         return pages
       },
       {
-        '/index': { page: '/index' },
         '/': { page: '/' }
       }
     )
