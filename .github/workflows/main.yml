@@ -9,6 +9,7 @@ env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
   CLOUDSDK_RUN_PLATFORM: managed
   CLOUDSDK_RUN_REGION: us-central1
+  HUGO_BASEURL: https://corybuecker.com/
 
 jobs:
   build-deploy:

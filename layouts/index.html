@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{ with index .Site.RegularPages 0 }}
+    {{ partial "head.html" . }}
+  {{ end }}
+  <body>
+    <div class="container">
+      <div class="content">
+        {{ partial "header.html" . }}
+        <main>
+          <div class="wrapper">
+            {{ range first 1 .Site.RegularPages }}
+              <h1>
+                {{ .Title }}
+              </h1>
+              <p>
+                {{ .PublishDate.Format "1/2/2006" }}
+                {{ if (isset .Params "reviseddate") }}
+                  (Revised: {{ dateFormat "1/2/2006" (.Param "reviseddate") }})
+                {{ end }}
+              </p>
+
+              {{ .Content }}
+            {{ end }}
+            
+            {{ range after 1 .Site.RegularPages }}
+              <h1>
+                <tracked-link>
+                  <a href="{{ .Permalink }}" title="{{ .Title }}">
+                    {{ .Title }}
+                  </a>
+                </tracked-link>
+              </h1>
+              <p>
+                {{ .PublishDate.Format "1/2/2006" }}
+                {{ if (isset .Params "reviseddate") }}
+                  (Revised: {{ dateFormat "1/2/2006" (.Param "reviseddate") }})
+                {{ end }}
+              </p>
+              <p>
+                {{ .Params.preview | markdownify }}
+              </p>
+            {{ end }}
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
