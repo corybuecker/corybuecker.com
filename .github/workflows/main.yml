@@ -21,6 +21,7 @@ jobs:
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
+          version: '274.0.1'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Configure Docker
@@ -32,8 +33,5 @@ jobs:
       - name: Push image
         run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
-      - name: Install beta components
-        run: gcloud components install beta --quiet
-
       - name: Deploy to Cloud Run
-        run: gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }} --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }}
+        run: gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }} --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }}

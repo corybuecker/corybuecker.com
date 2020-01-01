@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-@import url('./normalize.css');
+@import url('/normalize.css');
 
 * {
   font-family: 'Lato', sans-serif;
@@ -59,6 +59,6 @@ pre {
   min-width: 0;
 }
 
-.container main .wrapper div:first-of-type h1 {
+.container main .wrapper h1:first-of-type {
   margin-top: 0;
 }

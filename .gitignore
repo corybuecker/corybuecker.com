@@ -1,14 +1,4 @@
-# Hugo default output directory
-/public
-
-## OS Files
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# OSX
 .DS_Store
-/credentials.json
+credentials.json
 node_modules
+public
