@@ -1,5 +1,5 @@
-@import './normalize';
 @import url('https://fonts.googleapis.com/css?family=Oswald|Roboto&display=swap');
+@import './normalize';
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -34,7 +34,7 @@ pre {
 
   header {
     flex-grow: 1;
-    flex-basis: 7rem;
+    flex-basis: 9rem;
     padding: 1rem;
 
     .wrapper nav {
@@ -63,7 +63,7 @@ pre {
 
   main {
     flex-grow: 5;
-    flex-basis: 35rem;
+    flex-basis: 45rem;
     padding: 1rem;
     min-width: 0;
 
