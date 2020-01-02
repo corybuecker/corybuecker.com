@@ -2,7 +2,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  entry: ['./src/analytics.js', './src/main.scss'],
+  entry: ['./src/analytics.ts', './src/main.scss'],
   plugins: [new MiniCssExtractPlugin()],
   output: {
     path: path.resolve(__dirname, 'static'),
@@ -10,6 +10,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.scss$/,
         use: [
@@ -25,5 +30,8 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
   }
 }

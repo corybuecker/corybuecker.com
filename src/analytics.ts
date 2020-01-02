@@ -6,9 +6,10 @@ const recordPageview = async () => {
 
   await fetch(analyticsUrl.toString())
 }
+
 recordPageview()
 
-const formatTimeElement = element => {
+const formatTimeElement = (element: HTMLTimeElement) => {
   const timeString = element.dateTime
   const dateTime = new Date(timeString)
 
@@ -17,6 +18,4 @@ const formatTimeElement = element => {
 
 const timeElements = document.getElementsByTagName('time')
 
-for (let timeElement of timeElements) {
-  formatTimeElement(timeElement)
-}
+Array.from(timeElements).forEach(formatTimeElement)
