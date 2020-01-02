@@ -10,6 +10,14 @@
             <h1>
               {{ .Title }}
             </h1>
+            <p>
+              <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">
+                {{ .PublishDate }}
+              </time>
+              {{ if (isset .Params "reviseddate") }}
+                (Revised: <time datetime="{{ .Param "reviseddate" }}">{{ .Param "reviseddate" }}</time>)
+              {{ end }}
+            </p>
 
             {{ .Content }}
           </div>

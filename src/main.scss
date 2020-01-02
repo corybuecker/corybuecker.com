@@ -1,8 +1,17 @@
 @import './normalize';
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto&display=swap');
+@import url('//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css');
 
 * {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-family: 'Oswald', sans-serif;
+
+  a {
+    font-family: 'Oswald', sans-serif;
+  }
 }
 
 img {

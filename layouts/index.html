@@ -14,9 +14,11 @@
                 {{ .Title }}
               </h1>
               <p>
-                {{ .PublishDate.Format "1/2/2006" }}
+                <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .PublishDate }}
+                </time>
                 {{ if (isset .Params "reviseddate") }}
-                  (Revised: {{ dateFormat "1/2/2006" (.Param "reviseddate") }})
+                  (Revised: <time datetime="{{ .Param "reviseddate" }}">{{ .Param "reviseddate" }}</time>)
                 {{ end }}
               </p>
 
@@ -25,16 +27,18 @@
             
             {{ range after 1 .Site.RegularPages }}
               <h1>
-                <tracked-link>
+                <tracked-anchor>
                   <a href="{{ .Permalink }}" title="{{ .Title }}">
                     {{ .Title }}
                   </a>
-                </tracked-link>
+                </tracked-anchor>
               </h1>
               <p>
-                {{ .PublishDate.Format "1/2/2006" }}
+                <time datetime="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">
+                  {{ .PublishDate }}
+                </time>
                 {{ if (isset .Params "reviseddate") }}
-                  (Revised: {{ dateFormat "1/2/2006" (.Param "reviseddate") }})
+                  (Revised: <time datetime="{{ .Param "reviseddate" }}">{{ .Param "reviseddate" }}</time>)
                 {{ end }}
               </p>
               <p>
@@ -44,7 +48,6 @@
           </div>
         </main>
       </div>
-    </div>
     <script defer src="/main.js"></script>
   </body>
 </html>
