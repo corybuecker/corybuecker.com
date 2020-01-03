@@ -1,3 +1,5 @@
+import 'core-js/features/promise'
+
 const recordPageview = (): Promise<{}> => {
   const analyticsUrl = new URL('https://analytics.corybuecker.com')
   const pageUrl = new URL(window.location.toString())
@@ -33,14 +35,14 @@ class TrackedAnchor extends HTMLElement {
     const target = event.target as HTMLAnchorElement
     const analyticsUrl = new URL('https://analytics.corybuecker.com')
 
-    analyticsUrl.search = `click_link=${target?.href}`
+    analyticsUrl.search = `click_link=${target.href}`
 
-    fetch(analyticsUrl.toString())
-      .then(() => (window.location.href = target?.href))
-      .catch(() => (window.location.href = target?.href))
+    fetch(analyticsUrl.toString()).finally(
+      () => (window.location.href = target.href)
+    )
 
     return false
   }
 }
 
-window.customElements.define('tracked-anchor', TrackedAnchor)
+customElements.define('tracked-anchor', TrackedAnchor)

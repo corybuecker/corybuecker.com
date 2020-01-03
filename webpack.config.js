@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: ['./src/analytics.ts', './src/main.scss'],
+  mode: 'production',
   plugins: [new MiniCssExtractPlugin()],
   output: {
     path: path.resolve(__dirname, 'static'),
@@ -12,7 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }],
         exclude: /node_modules/
       },
       {
