@@ -1,7 +1,7 @@
 ---
 title: Automating a Cloud Run deploy from GitHub Actions, part 2
-publishdate: 2019-12-29T17:49:03Z
-reviseddate: 2019-12-30T00:14:10Z
+published: 2019-12-29T17:49:03Z
+revised: 2019-12-30T00:14:10Z
 draft: false
 preview: With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.
 slug: automating-cloud-run-deploy-from-github-actions-part-two
@@ -13,27 +13,27 @@ With the service account set up, it's relatively simple to configure GitHub Acti
 
 Follow [GitHub's guide](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets#creating-encrypted-secrets) to create the following secrets:
 
-&mdash;&nbsp;`CLOUDSDK_CORE_PROJECT`
+--`CLOUDSDK_CORE_PROJECT`
 
 This is the Google project ID, not the project name. The easiest way to find this is by running:
 
     gcloud projects list
 
-&mdash;&nbsp;`SERVICE_ACCOUNT_KEY`
+--`SERVICE_ACCOUNT_KEY`
 
 The JSON service account key must be base64 encoded before being stored in GitHub secrets.
 
     cat PATH_TO_SERVICE_KEY | base64
 
-&mdash;&nbsp;`IMAGE_TAG`
+--`IMAGE_TAG`
 
 This can be anything and will be used to name the Docker image.
 
-&mdash;&nbsp;`CLOUD_RUN_SERVICE`
+--`CLOUD_RUN_SERVICE`
 
 This can be anything and will be used by Cloud Run as the service name.
 
-&mdash;&nbsp;`SERVICE_ACCOUNT`
+--`SERVICE_ACCOUNT`
 
 This is the email address of the service account created in part one.
 

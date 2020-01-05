@@ -1,0 +1,4 @@
+%{
+  "earmark": {:hex, :earmark, "1.4.3", "364ca2e9710f6bff494117dbbd53880d84bebb692dafc3a78eb50aa3183f2bfd", [:mix], [], "hexpm"},
+  "traverse": {:hex, :traverse, "1.0.0", "20bf64bdfa0270c9c7fc6276de772bae6d195b1cc51282ee9449d1be0d3c114a", [:mix], [], "hexpm"},
+}

@@ -1,7 +1,0 @@
-{
-  "languageCode": "en-us",
-  "title": "Cory Buecker",
-  "permalinks": {
-    "posts": "/post/:title"
-  }
-}

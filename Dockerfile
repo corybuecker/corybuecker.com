@@ -1,21 +1,19 @@
-FROM golang:alpine AS builder
+FROM elixir:1.9.4-alpine AS builder
 
-RUN mkdir $HOME/src && \
-  cd $HOME/src && \
-  apk add git nodejs npm && \
-  git clone https://github.com/gohugoio/hugo.git && \
-  cd $HOME/src/hugo && \
-  git checkout v0.62.1 && \
-  go install
+RUN apk add nodejs npm
+COPY mix.exs mix.lock package.json package-lock.json /build/
+WORKDIR /build
+
+RUN mix local.hex --force && \
+  mix deps.get && \
+  mix deps.compile && \
+  npm install
 
 COPY . /build
 
-WORKDIR /build
-
-RUN npm install && \
-  npx webpack && \
-  $GOPATH/bin/hugo --minify 
+RUN npx webpack && \
+  mix run -e "BlogBuilder.build"
 
 FROM nginx:mainline-alpine
-COPY --from=builder /build/public /usr/share/nginx/html
+COPY --from=builder /build/out /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

@@ -1,7 +1,7 @@
 ---
 title: How to make a static blog in Markdown and Next.js
-publishdate: 2019-12-01T12:54:49Z
-reviseddate: 2020-01-02T01:25:43Z
+published: 2019-12-01T12:54:49Z
+revised: 2020-01-05T17:06:55Z
 draft: false
 preview: I had a couple of requirements in mind when starting this site. First, I wanted to use Markdown but build the main content management system (CMS) with React. It also needs to transpile into a static site so that I can host it in a S3 bucket or in Google Cloud Storage. The Markdown content files need to contain front matter that renders to the page.
 slug: how-to-make-a-static-blog-in-markdown-and-nextjs
@@ -69,7 +69,7 @@ fs.writeFileSync(
 
 I needed all of my posts to be accessible on URLs with a slug, e.g. `/posts/2019-12-01-an-introduction`. Next.js provides an mechanism to do this with [dynamic routing](https://nextjs.org/docs#dynamic-routing).
 
-When exporting the static version of this site, Next.js will call `getInitialProps` on all of the exported pages. This is used to pass the dynamic query string to the routed page. This [requires that the `getInitialProps` function](https://nextjs.org/docs#limitation) extract the correct page from the aggregated content JSON file.
+When exporting the static version of this site, Next.js will call `getInitialProps` on all of the exported pages. This is used to pass the dynamic query string to the routed page. This [requires that the function](https://nextjs.org/docs#limitation) extract the correct page from the aggregated content JSON file.
 
 ```
 import posts from '../src/content.json'

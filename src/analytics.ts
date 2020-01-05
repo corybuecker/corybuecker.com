@@ -1,5 +1,3 @@
-import 'core-js/features/promise'
-
 const recordPageview = (): Promise<{}> => {
   const analyticsUrl = new URL('https://analytics.corybuecker.com')
   const pageUrl = new URL(window.location.toString())
