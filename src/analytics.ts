@@ -22,11 +22,16 @@ Array.from(timeElements).forEach(formatTimeElement)
 class TrackedAnchor extends HTMLElement {
   constructor() {
     super()
+    const anchor: HTMLAnchorElement = this.getElementsByTagName('a')[0]
 
-    this.addEventListener('click', this.handleTrackedAnchorClick)
+    anchor.addEventListener('click', this.handleTrackedAnchorClick)
   }
 
   handleTrackedAnchorClick(event: Event) {
+    if (event.target instanceof HTMLAnchorElement === false) {
+      return
+    }
+
     event.preventDefault()
     event.stopPropagation()
 
