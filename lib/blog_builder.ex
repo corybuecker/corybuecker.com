@@ -35,7 +35,8 @@ defmodule BlogBuilder do
         [frontmatter, post]
       end)
       |> Enum.filter(fn [frontmatter, _post] ->
-        frontmatter[:draft] == "false" || Mix.env() != "production"
+        frontmatter[:draft] == "false" ||
+          (frontmatter[:draft] == "true" && Mix.env() != :prod)
       end)
 
     content =
