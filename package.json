@@ -19,5 +19,8 @@
   },
   "scripts": {
     "watch": "watch 'npx webpack' ./src"
+  },
+  "dependencies": {
+    "serve": "^11.3.0"
   }
 }

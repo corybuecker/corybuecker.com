@@ -1,9 +1,9 @@
-defmodule BlogBuilder.MixProject do
+defmodule Builder.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :blog_builder,
+      app: :builder,
       version: "0.1.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
@@ -22,7 +22,8 @@ defmodule BlogBuilder.MixProject do
   defp deps do
     [
       {:earmark, "~> 1.4.3"},
-      {:traverse, "~> 1.0.0"}
+      {:traverse, "~> 1.0.0"},
+      {:phoenix_html, "~> 2.13.3"}
     ]
   end
 end

@@ -12,7 +12,7 @@ RUN mix local.hex --force && \
 COPY . /build
 
 RUN npx webpack && \
-  mix run -e "BlogBuilder.build"
+  mix run -e "Builder.build"
 
 FROM nginx:mainline-alpine
 COPY --from=builder /build/out /usr/share/nginx/html

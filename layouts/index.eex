@@ -20,7 +20,7 @@
               <a href="/" class="home">Cory Buecker</a>
             </tracked-anchor>
             <tracked-anchor>
-              <a href="https://github.com/corybuecker">
+              <a href="https://github.com/corybuecker" alt="Github page for Cory Buecker">
                 <svg
                   role="img"
                   viewBox="0 0 24 24"
@@ -37,7 +37,7 @@
               </a>
             </tracked-anchor>
             <tracked-anchor>
-              <a href="https://www.linkedin.com/in/corybuecker">
+              <a href="https://www.linkedin.com/in/corybuecker" alt="LinkedIn page for Cory Buecker">
                 <svg
                   role="img"
                   viewBox="0 0 24 24"

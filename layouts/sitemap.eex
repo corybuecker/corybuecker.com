@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://corybuecker.com/</loc>
+      <lastmod><%= @content |> List.first() |> Keyword.fetch!(:published) %></lastmod>
+   </url>
+   <%= Enum.map(@content, fn post -> %>
+      <url>
+         <loc>https://corybuecker.com/post/<%= post |> Keyword.fetch!(:slug) %></loc>
+         <lastmod><%= post |> Keyword.fetch!(:published) %></lastmod>
+      </url>
+   <% end) %>
+</urlset>

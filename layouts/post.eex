@@ -2,10 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width,minimum-scale=1,initial-scale=1"
-    />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
     <link rel="preload" href="/main.css" as="style" />
     <link rel="stylesheet" href="/main.css" />
     <meta name="description" content="<%= @description %>" />
@@ -20,7 +17,7 @@
               <a href="/" class="home">Cory Buecker</a>
             </tracked-anchor>
             <tracked-anchor>
-              <a href="https://github.com/corybuecker">
+              <a href="https://github.com/corybuecker" alt="Github page for Cory Buecker">
                 <svg
                   role="img"
                   viewBox="0 0 24 24"
@@ -36,9 +33,8 @@
                 </svg>
               </a>
             </tracked-anchor>
-
             <tracked-anchor>
-              <a href="https://www.linkedin.com/in/corybuecker">
+              <a href="https://www.linkedin.com/in/corybuecker" alt="LinkedIn page for Cory Buecker">
                 <svg
                   role="img"
                   viewBox="0 0 24 24"

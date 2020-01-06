@@ -28,14 +28,14 @@ class TrackedAnchor extends HTMLElement {
   }
 
   handleTrackedAnchorClick(event: Event) {
-    if (event.target instanceof HTMLAnchorElement === false) {
+    if (event.currentTarget instanceof HTMLAnchorElement === false) {
       return
     }
 
     event.preventDefault()
     event.stopPropagation()
 
-    const target = event.target as HTMLAnchorElement
+    const target = event.currentTarget as HTMLAnchorElement
     const analyticsUrl = new URL('https://analytics.corybuecker.com')
 
     analyticsUrl.search = `click_link=${target.href}`
