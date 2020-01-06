@@ -1,5 +1,5 @@
 FROM elixir:1.9.4-alpine AS builder
-
+ENV MIX_ENV prod
 RUN apk add nodejs npm
 COPY mix.exs mix.lock package.json package-lock.json /build/
 WORKDIR /build
