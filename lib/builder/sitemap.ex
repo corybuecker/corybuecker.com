@@ -1,14 +1,15 @@
 defmodule Builder.Sitemap do
+  @moduledoc false
   require Logger
 
   def build do
     {:ok, template} = File.read("layouts/sitemap.eex")
 
-    File.rm("out/sitemap.xml")
+    File.rm("#{Application.fetch_env!(:builder, :out)}/sitemap.xml")
 
     :ok =
       File.write(
-        "out/sitemap.xml",
+        "#{Application.fetch_env!(:builder, :out)}/sitemap.xml",
         EEx.eval_string(template, [
           {:trim, true},
           {:engine, Phoenix.HTML.Engine},
@@ -17,6 +18,6 @@ defmodule Builder.Sitemap do
         [:write]
       )
 
-    Logger.info("built out/sitemap.xml")
+    Logger.info("built sitemap.xml")
   end
 end

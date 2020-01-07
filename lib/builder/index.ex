@@ -1,15 +1,16 @@
 defmodule Builder.Index do
+  @moduledoc false
   require Logger
 
   def build do
     {:ok, index_template} = File.read("layouts/index.eex")
 
     [home | content] = Builder.Posts.posts() |> Enum.reverse()
-    File.rm("out/index.html")
+    File.rm("index.html")
 
     :ok =
       File.write(
-        "out/index.html",
+        "#{Application.fetch_env!(:builder, :out)}/index.html",
         EEx.eval_string(index_template, [
           {:trim, true},
           {:engine, Phoenix.HTML.Engine},
@@ -18,6 +19,6 @@ defmodule Builder.Index do
         [:write]
       )
 
-    Logger.info("built out/index.html")
+    Logger.info("built index.html")
   end
 end

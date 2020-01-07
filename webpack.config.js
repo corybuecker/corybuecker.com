@@ -2,6 +2,8 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
+const output = process.env.NODE_ENV === 'production' ? 'output' : 'out'
+
 module.exports = {
   entry: ['./src/analytics.ts', './src/main.scss'],
   mode: 'production',
@@ -10,12 +12,12 @@ module.exports = {
     new CopyPlugin([
       {
         from: path.resolve(__dirname, 'static'),
-        to: path.resolve(__dirname, 'out')
+        to: path.resolve(__dirname, output)
       }
     ])
   ],
   output: {
-    path: path.resolve(__dirname, 'out'),
+    path: path.resolve(__dirname, output),
     filename: 'main.js'
   },
   module: {
