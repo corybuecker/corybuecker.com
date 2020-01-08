@@ -1,5 +1,5 @@
 const recordPageview = (): Promise<{}> => {
-  const analyticsUrl = new URL('https://analytics.corybuecker.com')
+  const analyticsUrl = new URL('https://exlytics.corybuecker.com')
   const pageUrl = new URL(window.location.toString())
 
   analyticsUrl.search = `page=${pageUrl.pathname}`
@@ -36,7 +36,7 @@ class TrackedAnchor extends HTMLElement {
     event.stopPropagation()
 
     const target = event.currentTarget as HTMLAnchorElement
-    const analyticsUrl = new URL('https://analytics.corybuecker.com')
+    const analyticsUrl = new URL('https://exlytics.corybuecker.com')
 
     analyticsUrl.search = `click_link=${target.href}`
 

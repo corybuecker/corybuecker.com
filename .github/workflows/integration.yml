@@ -31,6 +31,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Backend dependency caching
+        uses: actions/cache@v1.1.0
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Frontend dependency caching
+        uses: actions/cache@v1.1.0
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+
       - name: Setup GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
@@ -39,6 +53,9 @@ jobs:
 
       - name: Download frontend dependencies
         run: npm install
+
+      - name: Lint backend
+        run: mix credo --strict
 
       - name: Download and build backend dependencies
         run: mix deps.get && mix deps.compile

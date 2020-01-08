@@ -4,6 +4,7 @@ published: 2019-12-29T17:49:03Z
 revised: 2019-12-30T00:14:10Z
 draft: false
 preview: With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.
+description: With the service account set up, it's relatively simple to configure GitHub Actions to deploy when a branch is pushed.
 slug: automating-cloud-run-deploy-from-github-actions-part-two
 ---
 

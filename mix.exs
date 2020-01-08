@@ -11,21 +11,19 @@ defmodule Builder.MixProject do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:earmark, "~> 1.4.3"},
       {:yaml_elixir, "~> 2.4.0"},
       {:traverse, "~> 1.0.0"},
       {:phoenix_html, "~> 2.13.3"},
-      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.1.0", runtime: false},
       {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
     ]
   end

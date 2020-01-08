@@ -43,8 +43,7 @@ defmodule Builder.Posts do
         [frontmatter, post]
       end)
       |> Enum.filter(fn [frontmatter, _post] ->
-        frontmatter[:draft] == false ||
-          (frontmatter[:draft] == true && Mix.env() != :prod)
+        frontmatter[:draft] == false || Application.fetch_env!(:builder, :publish_drafts)
       end)
 
     content
@@ -86,8 +85,8 @@ defmodule Builder.Posts do
 
       frontmatter ++
         [{:content, body}] ++
-        [{:description, frontmatter[:preview]}] ++
-        [{:markdown_preview, preview}]
+        [{:markdown_preview, preview}] ++
+        [{:lastmod, frontmatter[:revised] || frontmatter[:published]}]
     end)
   end
 
