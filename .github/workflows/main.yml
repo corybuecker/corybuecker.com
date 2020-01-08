@@ -1,9 +1,9 @@
-name: Build and deploy integration to Cloud Run
+name: Build and deploy to Cloud Run
 
 on:
   push:
     branches:
-      - integration
+      - master
 
 env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
