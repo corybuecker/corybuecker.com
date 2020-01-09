@@ -6,8 +6,8 @@
       name="viewport"
       content="width=device-width,minimum-scale=1,initial-scale=1"
     />
-    <link rel="preload" href="/main.css" as="style" />
-    <link rel="stylesheet" href="/main.css" />
+    <link rel="preload" href="/styles.css" as="style" />
+    <link rel="stylesheet" href="/styles.css" />
     <meta name="description" content="<%= @home[:description] %>" />
     <title><%= @home[:title] %> | Cory Buecker</title>
   </head>
@@ -79,6 +79,7 @@
         </main>
       </div>
     </div>
-    <script defer src="/main.js"></script>
+    <script defer src="/analytics.js"></script>
+    <script defer src="/prism.js"></script>
   </body>
 </html>

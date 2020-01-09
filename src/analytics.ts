@@ -1,10 +1,10 @@
-const recordPageview = (): Promise<{}> => {
+const recordPageview = (): boolean => {
   const analyticsUrl = new URL('https://exlytics.corybuecker.com')
   const pageUrl = new URL(window.location.toString())
 
   analyticsUrl.search = `page=${pageUrl.pathname}`
 
-  return fetch(analyticsUrl.toString())
+  return navigator.sendBeacon(analyticsUrl.toString())
 }
 
 recordPageview()
@@ -32,19 +32,12 @@ class TrackedAnchor extends HTMLElement {
       return
     }
 
-    event.preventDefault()
-    event.stopPropagation()
-
     const target = event.currentTarget as HTMLAnchorElement
     const analyticsUrl = new URL('https://exlytics.corybuecker.com')
 
     analyticsUrl.search = `click_link=${target.href}`
 
-    fetch(analyticsUrl.toString()).finally(
-      () => (window.location.href = target.href)
-    )
-
-    return false
+    navigator.sendBeacon(analyticsUrl.toString())
   }
 }
 

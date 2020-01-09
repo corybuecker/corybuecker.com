@@ -9,5 +9,5 @@
     "allowJs": true,
     "lib": ["ES2018.Promise", "ES2015", "dom"]
   },
-  "exclude": ["node_modules", "out"]
+  "include": ["src"]
 }

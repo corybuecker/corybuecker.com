@@ -1,9 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto|Ubuntu+Mono&display=swap');
 @import './normalize';
-
-* {
-  font-family: 'Roboto', sans-serif;
-}
+@import './prism';
 
 h1 {
   font-family: 'Oswald', sans-serif;
@@ -18,12 +15,11 @@ img {
   height: auto;
 }
 
-pre {
-  background-color: #222;
-  color: #fff;
-  padding: 1rem;
-  border-radius: 0.25rem;
-  overflow: auto;
+p,
+a,
+h2,
+li {
+  font-family: 'Roboto', sans-serif;
 }
 
 p {

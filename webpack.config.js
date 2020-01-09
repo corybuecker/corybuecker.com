@@ -5,7 +5,11 @@ const CopyPlugin = require('copy-webpack-plugin')
 const output = process.env.NODE_ENV === 'production' ? 'output' : 'out'
 
 module.exports = {
-  entry: ['./src/analytics.ts', './src/main.scss'],
+  entry: {
+    analytics: './src/analytics.ts',
+    prism: './src/prism.js',
+    styles: './src/styles.scss'
+  },
   mode: 'production',
   plugins: [
     new MiniCssExtractPlugin(),
@@ -18,7 +22,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, output),
-    filename: 'main.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
