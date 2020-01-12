@@ -53,33 +53,25 @@
           <div class="wrapper">
             <h1><%= @home[:title] %></h1>
             <p>
-              <time datetime="<%= @home[:published] %>"
-                ><%= @home[:published] %></time
-              >
-              <%= if @home[:revised] do %>(Revised:
-              <time datetime="<%= @home[:revised] %>"
-                ><%= @home[:revised] %></time
-              >)<% end %>
+              <time datetime="<%= @home[:published] %>"><%= @home[:published] %></time>
+              <%= if @home[:revised] do %>
+              (Revised: <time datetime="<%= @home[:revised] %>"><%= @home[:revised] %></time>)<% end %>
             </p>
             <%= @home[:content] %> <%= Enum.map(@posts, fn post -> %>
             <h1>
               <tracked-anchor><a href="/post/<%= post[:slug] %>"><%= post[:title] %></a></tracked-anchor>
             </h1>
             <p>
-              <time datetime="<%= post[:published] %>"
-                ><%= post[:published] %></time
-              >
-              <%= if post[:revised] do %>(Revised:
-              <time datetime="<%= post[:revised] %>"><%= post[:revised] %></time
-              >)<% end %>
+              <time datetime="<%= post[:published] %>"><%= post[:published] %></time>
+              <%= if post[:revised] do %>
+              (Revised: <time datetime="<%= post[:revised] %>"><%= post[:revised] %></time>)<% end %>
             </p>
-
             <%= post[:markdown_preview] %> <% end) %>
           </div>
         </main>
       </div>
     </div>
-    <script defer src="/analytics.js"></script>
-    <script defer src="/prism.js"></script>
+    <script async defer src="/analytics.js"></script>
+    <script async src="/prism.js"></script>
   </body>
 </html>

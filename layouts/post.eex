@@ -65,7 +65,7 @@
         </main>
       </div>
     </div>
-    <script defer src="/analytics.js"></script>
-    <script defer src="/prism.js"></script>
+    <script async defer src="/analytics.js"></script>
+    <script async src="/prism.js"></script>
   </body>
 </html>
