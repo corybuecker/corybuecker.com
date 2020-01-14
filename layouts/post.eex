@@ -57,7 +57,7 @@
             <h1><%= @title %></h1>
             <p>
               <time datetime="<%= @published %>"><%= @published %></time>
-              <%= if assigns[:revised] do %>(Revised:
+              <%= if assigns[:revised] do %>(Updated:
               <time datetime="<%= @revised %>"><%= @revised %></time>)<% end %>
             </p>
             <%= @content %>

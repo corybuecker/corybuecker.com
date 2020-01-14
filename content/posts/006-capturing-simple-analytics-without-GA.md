@@ -1,9 +1,10 @@
 ---
 title: How to capture simple blog analytics without Google Analytics
 published: 2020-01-05T17:27:46Z
+revised: 2020-01-14T12:39:32Z
 draft: false
-preview: As part of this building my blog, I wanted to capture some analytics with a simple, privacy-focused approach.
-description: As part of this building my blog, I wanted to capture some analytics with a simple, privacy-focused approach.
+preview: As part of building my blog, I wanted to capture some analytics with a simple, privacy-focused approach.
+description: Capture simple analytics for a blog with a privacy-oriented approach.
 slug: capture-simple-analytics-without-google-analytics
 ---
 
@@ -15,7 +16,7 @@ In Exlytics or this website, I don't use cookies at all.
 
 Google Analytics relies on a cookie to remember the steps a particular visitor follows around a website. While [this is now a first-party cookie](https://clearcode.cc/blog/difference-between-first-party-third-party-cookies/), I don't see the need to use cookies for a simple blog. I'm not interested in distinct user analytics for a small site.
 
-Safari is a leader in web tracking privacy with their [Intelligent Tracking Prevention (ITP) technology](https://webkit.org/blog/9521/intelligent-tracking-prevention-2-3/). If I do use this technique again for a different site and want to know a user's actions on my site only, I can add a first-party cookie at that time. This should be safe with ITP as long as Exlytics is hosted on a subdomain of that site.
+Safari is a leader in web tracking privacy with their [Intelligent Tracking Prevention (ITP) technology](https://webkit.org/blog/9521/intelligent-tracking-prevention-2-3/). If I do use this technique again for a different site and want to know a user's actions on my site only, I can add a first-party cookie at that time. This should be safe with ITP as long as Exlytics is hosted on a subdomain (shared eTLD+1) of that site.
 
 ## Personally identifiable information (PII)
 

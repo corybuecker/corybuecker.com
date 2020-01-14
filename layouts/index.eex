@@ -55,7 +55,7 @@
             <p>
               <time datetime="<%= @home[:published] %>"><%= @home[:published] %></time>
               <%= if @home[:revised] do %>
-              (Revised: <time datetime="<%= @home[:revised] %>"><%= @home[:revised] %></time>)<% end %>
+              (Updated: <time datetime="<%= @home[:revised] %>"><%= @home[:revised] %></time>)<% end %>
             </p>
             <%= @home[:content] %> <%= Enum.map(@posts, fn post -> %>
             <h1>
@@ -64,7 +64,7 @@
             <p>
               <time datetime="<%= post[:published] %>"><%= post[:published] %></time>
               <%= if post[:revised] do %>
-              (Revised: <time datetime="<%= post[:revised] %>"><%= post[:revised] %></time>)<% end %>
+              (Updated: <time datetime="<%= post[:revised] %>"><%= post[:revised] %></time>)<% end %>
             </p>
             <%= post[:markdown_preview] %> <% end) %>
           </div>

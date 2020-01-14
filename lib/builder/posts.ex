@@ -64,7 +64,7 @@ defmodule Builder.Posts do
           [{:post, true}]
         )
 
-      body = Earmark.Transform.transform(ast, [{:indent, 0}, {:initial_indent, 0}])
+      body = Earmark.Transform.transform(ast, %{initial_indent: 0, indent: 0})
 
       {:ok, ast, []} = Earmark.as_ast(frontmatter[:preview])
 
@@ -81,7 +81,7 @@ defmodule Builder.Posts do
           [{:post, true}]
         )
 
-      preview = Earmark.Transform.transform(ast, [{:indent, 0}, {:initial_indent, 0}])
+      preview = Earmark.Transform.transform(ast, %{initial_indent: 0, indent: 0})
 
       frontmatter ++
         [{:content, body}] ++

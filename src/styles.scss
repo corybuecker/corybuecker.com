@@ -26,6 +26,22 @@ p {
   line-height: 1.4;
 }
 
+tracked-anchor {
+  display: inline;
+}
+
+a {
+  &:visited {
+    color: #0000ee;
+  }
+
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: darken(#0000ee, 10%);
+  }
+}
+
 .container {
   .content {
     display: flex;
@@ -48,9 +64,9 @@ p {
         text-align: center;
 
         a {
-          text-decoration: none;
           color: #000;
           font-size: x-large;
+          text-decoration: none;
 
           &:hover {
             text-decoration: underline;
