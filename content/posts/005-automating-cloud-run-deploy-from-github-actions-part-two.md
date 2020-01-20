@@ -81,7 +81,10 @@ jobs:
         run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
-        run: gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }}
+        run: >
+          gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
+          --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+          --service-account ${{ secrets.SERVICE_ACCOUNT }}
 ```
 
 On the next push to GitHub, the action will run.

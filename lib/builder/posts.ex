@@ -25,28 +25,27 @@ defmodule Builder.Posts do
   end
 
   def posts do
-    content =
-      post_files()
-      |> Enum.map(fn file_name ->
-        {:ok, file} = File.read(file_name)
+    post_files()
+    |> Enum.map(fn file_name ->
+      {:ok, file} = File.read(file_name)
 
-        [frontmatter, post] = file |> String.split("---", [{:parts, 3}]) |> Enum.drop(1)
+      [frontmatter, post] = file |> String.split("---", [{:parts, 3}]) |> Enum.drop(1)
 
-        {:ok, frontmatter} = frontmatter |> YamlElixir.read_from_string()
-
-        frontmatter =
+      frontmatter =
+        with {:ok, frontmatter} <-
+               frontmatter
+               |> YamlElixir.read_from_string() do
           frontmatter
           |> Enum.reduce([], fn {key, value}, acc ->
             [{key |> String.to_atom(), value}] ++ acc
           end)
+        end
 
-        [frontmatter, post]
-      end)
-      |> Enum.filter(fn [frontmatter, _post] ->
-        frontmatter[:draft] == false || Application.fetch_env!(:builder, :publish_drafts)
-      end)
-
-    content
+      [frontmatter, post]
+    end)
+    |> Enum.filter(fn [frontmatter, _post] ->
+      frontmatter[:draft] == false || Application.fetch_env!(:builder, :publish_drafts)
+    end)
     |> Enum.map(fn [frontmatter, post] ->
       {:ok, ast, []} = Earmark.as_ast(post)
       File.mkdir_p("#{Application.fetch_env!(:builder, :out)}/post/#{frontmatter[:slug]}")
@@ -93,5 +92,9 @@ defmodule Builder.Posts do
   @spec post_files() :: list(binary())
   defp post_files do
     Path.wildcard("content/posts/*.md")
+  end
+
+  def ok_value({:ok, value}) do
+    value
   end
 end

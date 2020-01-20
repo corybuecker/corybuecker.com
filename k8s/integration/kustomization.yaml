@@ -1,0 +1,7 @@
+resources:
+  - ../base
+
+namePrefix: integration-
+
+commonLabels:
+  deployment: integration-corybuecker-com

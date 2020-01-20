@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: corybuecker-com
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        deployment: corybuecker-com
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 80

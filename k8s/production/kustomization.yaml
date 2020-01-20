@@ -1,0 +1,7 @@
+resources:
+  - ../base
+
+namePrefix: production-
+
+commonLabels:
+  deployment: production-corybuecker-com

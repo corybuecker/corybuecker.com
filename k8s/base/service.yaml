@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: corybuecker-com
+spec:
+  selector:
+    deployment: corybuecker-com
+  type: NodePort
+  ports:
+    - port: 80
