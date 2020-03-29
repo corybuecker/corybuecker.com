@@ -22,3 +22,6 @@ spec:
             httpGet:
               path: /healthcheck
               port: 80
+          resources:
+            requests:
+              cpu: 1m

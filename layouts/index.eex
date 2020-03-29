@@ -66,7 +66,11 @@
               <%= if post[:revised] do %>
               (Updated: <time datetime="<%= post[:revised] %>"><%= post[:revised] %></time>)<% end %>
             </p>
-            <%= post[:markdown_preview] %> <% end) %>
+            <%= post[:markdown_preview] %>
+            <p>
+              <tracked-anchor><a href="/post/<%= post[:slug] %>">Read more</a></tracked-anchor>
+            </p>
+            <% end) %>
           </div>
         </main>
       </div>

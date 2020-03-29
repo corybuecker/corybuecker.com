@@ -9,7 +9,7 @@ env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
   CLOUDSDK_COMPUTE_REGION: us-central1
   CLOUDSDK_COMPUTE_ZONE: us-central1-c
-  MIX_ENV: prod
+  MIX_ENV: integration
   NODE_ENV: production
 
 jobs:
