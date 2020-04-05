@@ -76,15 +76,15 @@ jobs:
         run: npx webpack
 
       - name: Build image
-        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
+        run: docker build -t ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }} .
 
       - name: Push image
-        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+        run: docker push ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
 
       - name: Deploy
         run: |
-          gcloud container clusters get-credentials ${{ secrets. CLUSTER_NAME }}
+          gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }}
           cd ./k8s/integration
           cp ../../kustomize ./
-          ./kustomize edit set image nginx=${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+          ./kustomize edit set image nginx=${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
           ./kustomize build . | kubectl apply -f -
