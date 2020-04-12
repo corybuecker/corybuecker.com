@@ -4,4 +4,24 @@ resources:
 namePrefix: production-
 
 commonLabels:
-  deployment: production-corybuecker-com
+  application: production-corybuecker-com
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: corybuecker-com
+    spec:
+      template:
+        spec:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: application
+                        operator: In
+                        values:
+                          - production-corybuecker-com
+                  topologyKey: kubernetes.io/hostname

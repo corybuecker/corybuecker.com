@@ -4,4 +4,24 @@ resources:
 namePrefix: integration-
 
 commonLabels:
-  deployment: integration-corybuecker-com
+  application: integration-corybuecker-com
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: corybuecker-com
+    spec:
+      template:
+        spec:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: application
+                        operator: In
+                        values:
+                          - integration-corybuecker-com
+                  topologyKey: kubernetes.io/hostname

@@ -5,9 +5,6 @@ metadata:
 spec:
   replicas: 3
   template:
-    metadata:
-      labels:
-        deployment: corybuecker-com
     spec:
       containers:
         - name: nginx
