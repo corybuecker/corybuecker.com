@@ -19,7 +19,7 @@ defmodule Builder.MixProject do
 
   defp deps do
     [
-      {:earmark, "~> 1.4.3"},
+      {:earmark, git: "https://github.com/corybuecker/earmark.git", tag: "add-optional-ws-support"},
       {:yaml_elixir, "~> 2.4.0"},
       {:traverse, "~> 1.0.0"},
       {:phoenix_html, "~> 2.13.3"},

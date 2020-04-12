@@ -11,7 +11,7 @@ module.exports = {
     prism: './src/prism.js',
     styles: './src/styles.scss'
   },
-  mode: 'production',
+  mode: 'development',
   plugins: [
     new MiniCssExtractPlugin(),
     new CopyPlugin([
