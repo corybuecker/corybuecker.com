@@ -73,7 +73,7 @@ jobs:
         run: mix run -e "Builder.build"
 
       - name: Build frontend
-        run: npx webpack
+        run: npx webpack --config webpack.integration.config.js
 
       - name: Build image
         run: docker build -t ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }} .

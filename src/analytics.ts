@@ -1,5 +1,7 @@
+import { EXLYTICS_URL } from './constants'
+
 const recordPageview = (): boolean => {
-  const analyticsUrl = new URL('https://exlytics.corybuecker.com')
+  const analyticsUrl = new URL(EXLYTICS_URL)
   const pageUrl = new URL(window.location.toString())
 
   analyticsUrl.search = `page=${pageUrl.pathname}`
@@ -33,7 +35,7 @@ class TrackedAnchor extends HTMLElement {
     }
 
     const target = event.currentTarget as HTMLAnchorElement
-    const analyticsUrl = new URL('https://exlytics.corybuecker.com')
+    const analyticsUrl = new URL(EXLYTICS_URL)
 
     analyticsUrl.search = `click_link=${target.href}`
 
