@@ -19,7 +19,7 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "watch_fe": "watch 'npx webpack' ./src",
+    "watch_fe": "watch 'npx webpack --config webpack.dev.config.js' ./src",
     "watch_be": "watch 'mix run -e \"Builder.build()\"' ./content"
   }
 }
