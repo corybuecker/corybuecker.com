@@ -19,12 +19,13 @@ defmodule Builder.MixProject do
 
   defp deps do
     [
-      {:earmark, git: "https://github.com/corybuecker/earmark.git", tag: "add-optional-ws-support"},
+      {:earmark,
+       git: "https://github.com/corybuecker/earmark.git", tag: "add-optional-ws-support"},
       {:yaml_elixir, "~> 2.4.0"},
-      {:traverse, "~> 1.0.0"},
-      {:phoenix_html, "~> 2.13.3"},
-      {:credo, "~> 1.1.0", runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.7", only: [:dev], runtime: false}
+      {:traverse, "~> 1.0.1"},
+      {:phoenix_html, "~> 2.14.2"},
+      {:credo, "~> 1.4.0", runtime: false},
+      {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false}
     ]
   end
 end

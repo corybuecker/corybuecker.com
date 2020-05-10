@@ -1,0 +1,65 @@
+name: Production
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
+  CLOUDSDK_COMPUTE_REGION: us-central1
+  CLOUDSDK_COMPUTE_ZONE: us-central1-c
+  MIX_ENV: prod
+  NODE_ENV: production
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup GCP
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: 274.0.1
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 13.11.0
+
+      - name: Setup Elixir
+        uses: actions/setup-elixir@master
+        with:
+          otp-version: 22.2.1
+          elixir-version: 1.10.2
+
+      - name: Setup Docker
+        run: gcloud auth configure-docker
+
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Download frontend dependencies
+        run: npm install
+
+      - name: Download and build backend dependencies
+        run: mix deps.get && mix deps.compile
+
+      - name: Build frontend
+        run: npx webpack --config webpack.production.config.js
+
+      - name: Build backend
+        run: mix run -e "Builder.build"
+
+      - name: Build image
+        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
+
+      - name: Push image
+        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+
+      - name: Configure kubectl
+        run: gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }}
+
+      - name: Deploy
+        run: kubectl --namespace production set image --record deployment/corybuecker-com corybuecker-com=${{ secrets.IMAGE_TAG }}:${{ github.sha }}

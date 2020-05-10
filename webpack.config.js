@@ -14,12 +14,12 @@ module.exports = {
   mode: 'development',
   plugins: [
     new MiniCssExtractPlugin(),
-    new CopyPlugin([
-      {
+    new CopyPlugin({
+      patterns: [{
         from: path.resolve(__dirname, 'static'),
         to: path.resolve(__dirname, output)
-      }
-    ])
+      }]
+    })
   ],
   output: {
     path: path.resolve(__dirname, output),
@@ -29,7 +29,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }],
+        use: [{ loader: 'ts-loader' }],
         exclude: /node_modules/
       },
       {

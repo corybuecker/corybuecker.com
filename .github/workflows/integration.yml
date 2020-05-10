@@ -1,4 +1,4 @@
-name: Build and deploy integration to GKE
+name: Integration
 
 on:
   push:
@@ -13,52 +13,35 @@ env:
   NODE_ENV: production
 
 jobs:
-  build-deploy:
-    name: Build and deploy
+  deploy:
+    name: Deploy
+    needs:
+      - frontend
+      - backend
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Elixir
-        uses: actions/setup-elixir@v1.2.0
-        with:
-          otp-version: 22.2.1
-          elixir-version: 1.10.2
-
-      - name: Setup Node
-        uses: actions/setup-node@v1.3.0
-        with:
-          node-version: 13.11.0
-
       - name: Setup GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: 274.0.1
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 13.11.0
+
+      - name: Setup Elixir
+        uses: actions/setup-elixir@master
+        with:
+          otp-version: 22.2.1
+          elixir-version: 1.10.2
+
       - name: Setup Docker
         run: gcloud auth configure-docker
 
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Set up Kustomize
-        run: |
-          curl -o kustomize.tar.gz --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.5.4/kustomize_v3.5.4_linux_amd64.tar.gz
-          tar zxvf kustomize.tar.gz
-          chmod u+x ./kustomize
-
-      - name: Backend dependency caching
-        uses: actions/cache@v1.1.0
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
-          restore-keys: ${{ runner.os }}-mix-
-
-      - name: Frontend dependency caching
-        uses: actions/cache@v1.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+        uses: actions/checkout@master
 
       - name: Download frontend dependencies
         run: npm install
@@ -66,14 +49,11 @@ jobs:
       - name: Download and build backend dependencies
         run: mix deps.get && mix deps.compile
 
-      - name: Lint backend
-        run: mix credo --strict
+      - name: Build frontend
+        run: npx webpack --config webpack.integration.config.js
 
       - name: Build backend
         run: mix run -e "Builder.build"
-
-      - name: Build frontend
-        run: npx webpack --config webpack.integration.config.js
 
       - name: Build image
         run: docker build -t ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }} .
@@ -81,10 +61,67 @@ jobs:
       - name: Push image
         run: docker push ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
 
+      - name: Configure kubectl
+        run: gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }}
+
       - name: Deploy
-        run: |
-          gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }}
-          cd ./k8s/integration
-          cp ../../kustomize ./
-          ./kustomize edit set image nginx=${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
-          ./kustomize build . | kubectl apply -f -
+        run: kubectl --namespace integration set image --record deployment/corybuecker-com corybuecker-com=${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
+
+  frontend:
+    name: Frontend checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 13.11.0
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Frontend dependency caching
+        uses: actions/cache@master
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+      - name: Download frontend dependencies
+        run: npm install
+      - name: Check outdated
+        run: npm outdated
+      - name: Audit
+        run: npm audit
+      - name: Lint
+        run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0
+      - name: Build frontend
+        run: npx webpack --config webpack.integration.config.js
+
+  backend:
+    name: Backend checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Elixir
+        uses: actions/setup-elixir@v1.2.0
+        with:
+          otp-version: 22.2.1
+          elixir-version: 1.10.2
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Backend dependency caching
+        uses: actions/cache@master
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Backend build caching
+        uses: actions/cache@master
+        with:
+          path: _build
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: ${{ runner.os }}-build-
+      - name: Download and build backend dependencies
+        run: mix deps.get && mix deps.compile
+      - name: Check outdated
+        run: mix hex.outdated
+      - name: Lint
+        run: mix credo --strict
+      - name: Build backend
+        run: mix run -e "Builder.build"

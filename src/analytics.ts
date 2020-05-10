@@ -1,12 +1,14 @@
-import { EXLYTICS_URL } from './constants'
+import { EXLYTICS_URL, EXLYTICS_ACCOUNT } from './constants'
 
 const recordPageview = (): boolean => {
   const analyticsUrl = new URL(EXLYTICS_URL)
   const pageUrl = new URL(window.location.toString())
+  const data = {
+    account_id: EXLYTICS_ACCOUNT,
+    page: pageUrl.pathname
+  }
 
-  analyticsUrl.search = `page=${pageUrl.pathname}`
-
-  return navigator.sendBeacon(analyticsUrl.toString())
+  return navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
 }
 
 recordPageview()
@@ -29,17 +31,19 @@ class TrackedAnchor extends HTMLElement {
     anchor.addEventListener('click', this.handleTrackedAnchorClick)
   }
 
-  handleTrackedAnchorClick(event: Event) {
+  handleTrackedAnchorClick(event: Event): undefined {
     if (event.currentTarget instanceof HTMLAnchorElement === false) {
       return
     }
 
     const target = event.currentTarget as HTMLAnchorElement
     const analyticsUrl = new URL(EXLYTICS_URL)
+    const data = {
+      account_id: EXLYTICS_ACCOUNT,
+      click_link: target.href
+    }
 
-    analyticsUrl.search = `click_link=${target.href}`
-
-    navigator.sendBeacon(analyticsUrl.toString())
+    navigator.sendBeacon(analyticsUrl.toString(), JSON.stringify(data))
   }
 }
 
