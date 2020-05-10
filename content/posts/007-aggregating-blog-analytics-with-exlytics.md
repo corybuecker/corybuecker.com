@@ -1,7 +1,7 @@
 ---
 title: Aggregating and reporting simple blog analytics with ExLytics
 published: 2020-05-10T21:03:17Z
-draft: true
+draft: false
 preview: My simple, privacy-focused analytics tool ExLytics captures page views and link clicks. Here's how I aggregate and display those analytics.
 description: Aggregate analytics from ExLytics
 slug: aggregating-blog-analytics-with-exlytics
