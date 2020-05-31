@@ -13,6 +13,19 @@ env:
   NODE_ENV: production
 
 jobs:
+  merge_check:
+    name: Merge
+
+    runs-on: ubuntu-latest
+
+    needs:
+      - frontend
+      - backend
+      - deploy
+
+    steps:
+      - run: echo 'Ok to merge'
+ 
   deploy:
     name: Deploy
     needs:
@@ -29,13 +42,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: 13.11.0
+          node-version: 14.3.0
 
       - name: Setup Elixir
         uses: actions/setup-elixir@master
         with:
           otp-version: 22.2.1
-          elixir-version: 1.10.2
+          elixir-version: 1.10.3
 
       - name: Setup Docker
         run: gcloud auth configure-docker
@@ -74,23 +87,23 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: 13.11.0
+          node-version: 14.3.0
+      
       - name: Checkout
         uses: actions/checkout@master
-      - name: Frontend dependency caching
-        uses: actions/cache@master
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+
       - name: Download frontend dependencies
         run: npm install
+
       - name: Check outdated
         run: npm outdated
+
       - name: Audit
         run: npm audit
+
       - name: Lint
         run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0
+
       - name: Build frontend
         run: npx webpack --config webpack.integration.config.js
 
@@ -99,29 +112,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Elixir
-        uses: actions/setup-elixir@v1.2.0
+        uses: actions/setup-elixir@master
         with:
           otp-version: 22.2.1
-          elixir-version: 1.10.2
+          elixir-version: 1.10.3
+
       - name: Checkout
         uses: actions/checkout@master
-      - name: Backend dependency caching
-        uses: actions/cache@master
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
-          restore-keys: ${{ runner.os }}-mix-
-      - name: Backend build caching
-        uses: actions/cache@master
-        with:
-          path: _build
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
-          restore-keys: ${{ runner.os }}-build-
+
       - name: Download and build backend dependencies
         run: mix deps.get && mix deps.compile
+
       - name: Check outdated
         run: mix hex.outdated
+
       - name: Lint
         run: mix credo --strict
+
       - name: Build backend
         run: mix run -e "Builder.build"

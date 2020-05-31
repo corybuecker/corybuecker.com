@@ -4,6 +4,7 @@ const baseConfig = require('./webpack.config.js');
 
 module.exports = merge(baseConfig, {
   mode: 'production',
+  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       EXLYTICS_URL: '\'https://exlytics.corybuecker.com\'',

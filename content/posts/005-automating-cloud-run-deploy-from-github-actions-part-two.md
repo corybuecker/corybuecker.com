@@ -51,7 +51,7 @@ name: Build and deploy to Cloud Run
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
@@ -66,7 +66,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@0.1.2
         with:
           version: '274.0.1'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}

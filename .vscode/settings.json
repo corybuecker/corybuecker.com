@@ -1,10 +1,14 @@
 {
-  "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "search.useGlobalIgnoreFiles": true,
   "editor.wordWrap": "on",
   "editor.renderWhitespace": "all",
   "insertDateString.format": "iso",
   "insertDateString.formatDate": "iso",
-  "insertDateString.formatTime": "iso"
+  "insertDateString.formatTime": "iso",
+  "editor.fontFamily": "Fira Code", 
+  "editor.fontLigatures": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
 }

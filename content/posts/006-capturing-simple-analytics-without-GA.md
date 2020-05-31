@@ -22,7 +22,7 @@ Safari is a leader in web tracking privacy with their [Intelligent Tracking Prev
 
 ExLytics uses the request headers, combined with the query string, to record an analytics request. Unfortuntely, that includes more information than I really need to capture. The GDPR, under Recital 30, indicates that [online identifiers may include IP addresses](https://gdpr-info.eu/recitals/no-30/).
 
-In ExLytics, I have limited the saved headers to those in [an approved list](https://github.com/corybuecker/exlytics/blob/master/lib/router.ex#L6). Initially, this list includes: user agent, referer, host and origin. Referer can be controversial since it tells me where a visitor came from. However, I have added a [referer-policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) to this website to instruct the browser to only send the origin of the referer. 
+In ExLytics, I have limited the saved headers to those in [an approved list](https://github.com/corybuecker/exlytics/blob/main/lib/router.ex#L6). Initially, this list includes: user agent, referer, host and origin. Referer can be controversial since it tells me where a visitor came from. However, I have added a [referer-policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) to this website to instruct the browser to only send the origin of the referer. 
 
 ## Self-hosted
 

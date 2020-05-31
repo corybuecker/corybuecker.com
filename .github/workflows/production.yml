@@ -3,7 +3,7 @@ name: Production
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
@@ -26,13 +26,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node-version: 13.11.0
+          node-version: 14.3.0
 
       - name: Setup Elixir
         uses: actions/setup-elixir@master
         with:
           otp-version: 22.2.1
-          elixir-version: 1.10.2
+          elixir-version: 1.10.3
 
       - name: Setup Docker
         run: gcloud auth configure-docker

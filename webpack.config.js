@@ -1,19 +1,16 @@
-const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const output = process.env.NODE_ENV === 'production' ? 'output' : 'out'
 
 module.exports = {
-  entry: {
-    analytics: './src/analytics.ts',
-    prism: './src/prism.js',
-    styles: './src/styles.scss'
-  },
+  entry: './src',
   mode: 'development',
   plugins: [
     new MiniCssExtractPlugin(),
+    new CompressionPlugin(),
     new CopyPlugin({
       patterns: [{
         from: path.resolve(__dirname, 'static'),
@@ -22,8 +19,10 @@ module.exports = {
     })
   ],
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, output),
-    filename: '[name].js'
+    filename: '[name].js',
+    chunkFilename: '[name].js'
   },
   module: {
     rules: [
