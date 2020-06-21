@@ -5,15 +5,16 @@ defmodule Builder.Sitemap do
   def build do
     {:ok, template} = File.read("layouts/sitemap.eex")
 
-    File.rm("#{Application.fetch_env!(:builder, :out)}/sitemap.xml")
+    File.rm("output/sitemap.xml")
 
     :ok =
       File.write(
-        "#{Application.fetch_env!(:builder, :out)}/sitemap.xml",
+        "output/sitemap.xml",
         EEx.eval_string(template, [
           {:trim, true},
           {:engine, Phoenix.HTML.Engine},
-          {:assigns, [{:content, Builder.Posts.posts()}]}
+          {:assigns,
+           [{:content, Builder.Posts.posts() |> Enum.filter(fn post -> post[:draft] != true end)}]}
         ]),
         [:write]
       )

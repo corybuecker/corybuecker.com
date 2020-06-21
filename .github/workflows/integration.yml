@@ -2,14 +2,17 @@ name: Integration
 
 on:
   push:
-    branches:
-      - integration
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
 
 env:
   CLOUDSDK_CORE_PROJECT: ${{ secrets.CLOUDSDK_CORE_PROJECT }}
   CLOUDSDK_COMPUTE_REGION: us-central1
   CLOUDSDK_COMPUTE_ZONE: us-central1-c
-  MIX_ENV: integration
+  MIX_ENV: production
   NODE_ENV: production
 
 jobs:
@@ -28,10 +31,13 @@ jobs:
  
   deploy:
     name: Deploy
+    
     needs:
       - frontend
       - backend
+    
     runs-on: ubuntu-latest
+    
     steps:
       - name: Setup GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -39,46 +45,20 @@ jobs:
           version: 274.0.1
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
-      - name: Setup Node
-        uses: actions/setup-node@master
-        with:
-          node-version: 14.3.0
-
-      - name: Setup Elixir
-        uses: actions/setup-elixir@master
-        with:
-          otp-version: 22.2.1
-          elixir-version: 1.10.3
-
       - name: Setup Docker
         run: gcloud auth configure-docker
 
       - name: Checkout
         uses: actions/checkout@master
 
-      - name: Download frontend dependencies
-        run: npm install
-
-      - name: Download and build backend dependencies
-        run: mix deps.get && mix deps.compile
-
-      - name: Build frontend
-        run: npx webpack --config webpack.integration.config.js
-
-      - name: Build backend
-        run: mix run -e "Builder.build"
-
       - name: Build image
-        run: docker build -t ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }} .
+        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
 
       - name: Push image
-        run: docker push ${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
+        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
-      - name: Configure kubectl
-        run: gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }}
-
-      - name: Deploy
-        run: kubectl --namespace integration set image --record deployment/corybuecker-com corybuecker-com=${{ secrets.IMAGE_TAG }}:integration-${{ github.sha }}
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy corybuecker-com --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }} --service-account ${{ secrets.SERVICE_ACCOUNT }} --platform managed --region us-central1
 
   frontend:
     name: Frontend checks
@@ -104,12 +84,11 @@ jobs:
       - name: Lint
         run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0
 
-      - name: Build frontend
-        run: npx webpack --config webpack.integration.config.js
-
   backend:
     name: Backend checks
     runs-on: ubuntu-latest
+    env:
+      MIX_ENV: dev
     steps:
       - name: Setup Elixir
         uses: actions/setup-elixir@master
@@ -128,6 +107,3 @@ jobs:
 
       - name: Lint
         run: mix credo --strict
-
-      - name: Build backend
-        run: mix run -e "Builder.build"

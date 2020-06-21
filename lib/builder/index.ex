@@ -5,12 +5,14 @@ defmodule Builder.Index do
   def build do
     {:ok, index_template} = File.read("layouts/index.eex")
 
-    [home | content] = Builder.Posts.posts() |> Enum.reverse()
-    File.rm("index.html")
+    [home | content] =
+      Builder.Posts.posts() |> Enum.filter(fn post -> post[:draft] != true end) |> Enum.reverse()
+
+    File.rm("output/index.html")
 
     :ok =
       File.write(
-        "#{Application.fetch_env!(:builder, :out)}/index.html",
+        "output/index.html",
         EEx.eval_string(index_template, [
           {:trim, true},
           {:engine, Phoenix.HTML.Engine},

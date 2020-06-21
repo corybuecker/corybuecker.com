@@ -5,8 +5,8 @@ defmodule Builder.MixProject do
     [
       app: :builder,
       version: "0.1.0",
-      elixir: "~> 1.9",
-      start_permanent: Mix.env() == :prod,
+      elixir: "1.10.3",
+      start_permanent: Mix.env() == :production,
       deps: deps()
     ]
   end
@@ -19,12 +19,11 @@ defmodule Builder.MixProject do
 
   defp deps do
     [
-      {:earmark,
-       git: "https://github.com/corybuecker/earmark.git", tag: "add-optional-ws-support"},
+      {:earmark, git: "https://github.com/pragdave/earmark.git", tag: "master"},
       {:yaml_elixir, "~> 2.4.0"},
       {:traverse, "~> 1.0.1"},
       {:phoenix_html, "~> 2.14.2"},
-      {:credo, "~> 1.4.0", runtime: false},
+      {:credo, "~> 1.4.0", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false}
     ]
   end

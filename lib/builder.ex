@@ -3,9 +3,9 @@ defmodule Builder do
   require Logger
 
   def build do
-    Logger.info("starting build to #{Application.fetch_env!(:builder, :out)}")
+    Logger.info("starting build to output")
 
-    File.mkdir_p(Application.fetch_env!(:builder, :out))
+    File.mkdir_p("output")
 
     Builder.Posts.build()
     Builder.Index.build()

@@ -7,11 +7,11 @@ defmodule Builder.Posts do
 
     posts()
     |> Enum.each(fn content ->
-      File.rm("#{Application.fetch_env!(:builder, :out)}/post/#{content[:slug]}/index.html")
+      File.rm("output/post/#{content[:slug]}/index.html")
 
       :ok =
         File.write(
-          "#{Application.fetch_env!(:builder, :out)}/post/#{content[:slug]}/index.html",
+          "output/post/#{content[:slug]}/index.html",
           EEx.eval_string(post_template, [
             {:engine, Phoenix.HTML.Engine},
             {:trim, true},
@@ -43,13 +43,10 @@ defmodule Builder.Posts do
 
       [frontmatter, post]
     end)
-    |> Enum.filter(fn [frontmatter, _post] ->
-      frontmatter[:draft] == false || Application.fetch_env!(:builder, :publish_drafts)
-    end)
     |> Enum.map(fn [frontmatter, post] ->
       {:ok, ast, []} = Earmark.as_ast(post)
 
-      File.mkdir_p("#{Application.fetch_env!(:builder, :out)}/post/#{frontmatter[:slug]}")
+      File.mkdir_p("output/post/#{frontmatter[:slug]}")
 
       ast =
         Traverse.mapall(
