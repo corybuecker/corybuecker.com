@@ -59,8 +59,8 @@ jobs:
       - name: Check outdated
         run: npm outdated
 
-      - name: Audit
-        run: npm audit
+      # - name: Audit
+      #   run: npm audit --production
 
       - name: Lint
         run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0

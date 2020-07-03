@@ -16,7 +16,7 @@ RUN mix run -e "Builder.build()"
 FROM node:14.4.0-alpine AS fe_builder
 
 COPY . /
-RUN npm install
+RUN npm install --production
 RUN npx webpack --config webpack.production.config.js
 
 FROM nginx:mainline-alpine
