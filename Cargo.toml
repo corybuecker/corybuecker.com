@@ -1,0 +1,16 @@
+[package]
+name = "blog_builder"
+version = "0.1.0"
+authors = ["Cory Buecker <cory.buecker@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+pulldown-cmark = { version = "0.7.1", default-features = false, features = ["simd"] }
+log = { version = "0.4", features = ["std"] }
+env_logger = "0.7.1"
+yaml-rust = "0.4.4"
+chrono = { version = "0.4", features = ["serde"] }
+mustache = "*"
+serde = { version = "1.0", features = ["derive"] }

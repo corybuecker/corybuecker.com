@@ -12,13 +12,13 @@ module.exports = {
     new CopyPlugin({
       patterns: [{
         from: path.resolve(__dirname, 'static'),
-        to: path.resolve(__dirname, 'output')
+        to: path.resolve(__dirname, '../output')
       }]
     })
   ],
   output: {
     publicPath: '/',
-    path: path.resolve(__dirname, 'output'),
+    path: path.resolve(__dirname, '../output'),
     filename: '[name].js',
     chunkFilename: '[name].js'
   },

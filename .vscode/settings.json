@@ -6,9 +6,10 @@
   "insertDateString.format": "iso",
   "insertDateString.formatDate": "iso",
   "insertDateString.formatTime": "iso",
-  "editor.fontFamily": "Fira Code", 
+  "editor.fontFamily": "Fira Code",
   "editor.fontLigatures": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
+  "editor.formatOnSave": true
 }
