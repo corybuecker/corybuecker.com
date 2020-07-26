@@ -4,7 +4,7 @@ COPY Cargo.toml Cargo.lock /
 COPY src /src
 COPY templates /templates
 COPY content /content
-RUN cargo run --release
+RUN cargo run
 
 FROM node:14.4.0-alpine AS fe_builder
 COPY assets /assets
