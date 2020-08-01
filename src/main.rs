@@ -1,15 +1,14 @@
+mod yaml_extractors;
+
 use chrono::{DateTime, Utc};
-use log::error;
+use log::{debug, error};
 use mustache::Template;
 use pulldown_cmark::{html, CowStr, Event, Parser, Tag};
 use serde::Serialize;
-use std::fs::File;
-use std::fs::{self};
+use std::fs::{self, File};
 use std::io::prelude::*;
-use yaml_rust::{Yaml, YamlLoader};
-
-mod yaml_extractors;
 use yaml_extractors::*;
+use yaml_rust::{Yaml, YamlLoader};
 
 #[derive(Serialize)]
 struct Post {
@@ -24,6 +23,24 @@ struct Post {
     markdown_body: String,
     markdown_preview: String,
     children: Vec<Post>,
+}
+
+impl Post {
+    fn new() -> Post {
+        Post {
+            title: String::new(),
+            published: Utc::now(),
+            revised: None,
+            draft: false,
+            description: String::new(),
+            slug: String::new(),
+            preview: None,
+            body: None,
+            markdown_body: String::new(),
+            markdown_preview: String::new(),
+            children: Vec::new(),
+        }
+    }
 }
 
 fn compile_markdown(post: &Option<String>) -> String {
@@ -47,19 +64,7 @@ fn compile_markdown(post: &Option<String>) -> String {
 }
 
 fn load_frontmatter(contents: &String) -> Post {
-    let mut frontmatter = Post {
-        title: String::new(),
-        published: Utc::now(),
-        revised: None,
-        draft: false,
-        description: String::new(),
-        slug: String::new(),
-        preview: None,
-        body: None,
-        markdown_body: String::new(),
-        markdown_preview: String::new(),
-        children: Vec::new(),
-    };
+    let mut frontmatter = Post::new();
 
     let split_string: String = String::from("---");
     let parts: std::str::SplitN<'_, &String> = contents.splitn(3, &split_string);
@@ -116,17 +121,17 @@ fn load_template(path: &String) -> Template {
 }
 
 fn write_to_file(path: &String, contents: &str) -> std::io::Result<usize> {
-    let mut file = match File::create(path) {
-        Ok(file) => file,
-        Err(err) => panic!("cannot create output"),
-    };
+    let mut file = File::create(path).unwrap();
     file.write(contents.as_bytes())
 }
 
 fn main() {
     env_logger::init();
-    fs::remove_dir_all("./output");
-    fs::create_dir_all("./output/post");
+    match fs::remove_dir_all("./output") {
+        Ok(()) => (),
+        Err(_message) => debug!("could not remove output directory, assuming it does not exist"),
+    }
+    fs::create_dir_all("./output/post").unwrap();
     let index_template = load_template(&String::from("./templates/index.mustache"));
     let post_template = load_template(&String::from("./templates/post.mustache"));
 
@@ -149,11 +154,11 @@ fn main() {
         let contents = load_file(file);
         let frm = load_frontmatter(&contents);
         let post = post_template.render_to_string(&frm).unwrap();
-        fs::create_dir_all(format!("./output/post/{}", frm.slug));
-        write_to_file(&format!("./output/post/{}/index.html", frm.slug), &post);
+        fs::create_dir_all(format!("./output/post/{}", frm.slug)).unwrap();
+        write_to_file(&format!("./output/post/{}/index.html", frm.slug), &post).unwrap();
         main_post.children.push(frm);
     }
 
     let index = index_template.render_to_string(&main_post).unwrap();
-    write_to_file(&String::from("./output/index.html"), &index);
+    write_to_file(&String::from("./output/index.html"), &index).unwrap();
 }
