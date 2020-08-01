@@ -18,7 +18,7 @@ If you prefer to see the code for this blog, it is [hosted on GitHub](https://gi
 
 1. First, follow the [setup guide](https://nextjs.org/docs) to create a new Next.js application.
 2. Create a `content` folder in your new project and add a sample Markdown file with some front matter.
-    ```language-yaml
+    ```yaml
     ---
     title: An introduction
     published: 2019-11-30
@@ -28,7 +28,7 @@ If you prefer to see the code for this blog, it is [hosted on GitHub](https://gi
     ```
 
 3. Install `react-markdown` and `front-matter`. These will be used to convert the Markdown content files into HTML.
-    ```language-bash
+    ```bash
     npm install --save-dev react-markdown front-matter
     ```
 
@@ -38,7 +38,7 @@ Everytime the Next.js development server starts or the site is exported, the con
 
 I wrote this simple script to convert the content. Please note that this step does not convert the Markdown into HTML. Rather, it converts the front matter into attributes and aggregates all of the content files into an array.
 
-```language-javascript
+```javascript
 const fm = require('front-matter')
 const fs = require('fs')
 const path = require('path')
@@ -71,7 +71,7 @@ I needed all of my posts to be accessible on URLs with a slug, e.g. `/posts/2019
 
 When exporting the static version of this site, Next.js will call `getInitialProps` on all of the exported pages. This is used to pass the dynamic query string to the routed page. This [requires that the function](https://nextjs.org/docs#limitation) extract the correct page from the aggregated content JSON file.
 
-```language-javascript
+```javascript
 import posts from '../src/content.json'
 
 const postsBySlug = posts.reduce((p, post) => {
@@ -92,7 +92,7 @@ Post.getInitialProps = async ({ query }) =>
 
 The last step is to tell Next.js about the dynamic routes based on the content JSON file. This is accomplished by [creating a `next.config.js` file](https://nextjs.org/docs#custom-configuration).
 
-```language-javascript
+```javascript
 const content = require('./src/content.json')
 
 module.exports = {

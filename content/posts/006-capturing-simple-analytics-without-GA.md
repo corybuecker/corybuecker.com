@@ -34,7 +34,7 @@ The tradeoff is that I am responsible for aggregating and visualizing that data.
 
 The [ExLytics](https://github.com/corybuecker/exlytics) service accepts both GET and POST requests to the root path. It uses the Google-maintained [Firestore API library](https://github.com/googleapis/elixir-google-api/tree/master/clients/firestore) to build and save the events. The most important transformation converts approved request headers into [Firestore documents](https://github.com/googleapis/elixir-google-api/blob/master/clients/firestore/lib/google_api/firestore/v1/model/document.ex).
 
-```language-elixir
+```elixir
 @allowed_headers ["host", "origin", "referer", "user-agent"]
 
 defp document(%Plug.Conn{} = conn) do
@@ -60,7 +60,7 @@ end
 
 ExLytics also stores any query string parameters as individual values in the Firestore document.
 
-```language-elixir
+```elixir
 defp document(%Plug.Conn{} = conn) do
   %Document{
     fields:
@@ -94,7 +94,7 @@ end
 
 Any request sent to ExLytics will be stored in Firestore. The simplest approach to save page views is by adding this Javascript snippet somewhere on each page.
 
-```language-javascript
+```javascript
 const recordPageview = () => {
   const analyticsUrl = new URL('https://exlytics.corybuecker.com')
   const pageUrl = new URL(window.location.toString())
@@ -109,7 +109,7 @@ recordPageview()
 
 Note the use of [`sendBeacon`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon); the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) would work well here, but I have another reason to use the [Navigator API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator). Using `sendBeacon` captures _outgoing_ link clicks without blocking the load of the third-party webpage.
 
-```language-javascript
+```javascript
 handleTrackedAnchorClick(event) {
   const target = event.currentTarget
   const analyticsUrl = new URL('https://exlytics.corybuecker.com')

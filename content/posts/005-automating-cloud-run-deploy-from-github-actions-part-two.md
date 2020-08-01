@@ -17,7 +17,7 @@ Follow [GitHub's guide](https://help.github.com/en/actions/automating-your-workf
 
 This is the Google project ID, not the project name. The easiest way to find this is by running:
 
-```language-bash
+```bash
 gcloud projects list
 ```
 
@@ -25,7 +25,7 @@ gcloud projects list
 
 The JSON service account key must be base64 encoded before being stored in GitHub secrets.
 
-```language-bash
+```bash
 cat PATH_TO_SERVICE_KEY | base64
 ```
 
@@ -45,7 +45,7 @@ This is the email address of the service account created in part one.
 
 In the repository, create a `main.yml` file in `.github/workflows`.
 
-```language-yaml
+```yaml
 name: Build and deploy to Cloud Run
 
 on:

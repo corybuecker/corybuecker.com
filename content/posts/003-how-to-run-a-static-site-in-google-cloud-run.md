@@ -19,7 +19,7 @@ Because I am using the fully managed version of Cloud Run, I can [only run conta
 
 I did have to configure my local Docker daemon with authentication to push to that registry.
 
-```language-bash
+```bash
 gcloud auth configure-docker
 ```
 
@@ -29,7 +29,7 @@ Create a simple Dockerfile in the root directory that will install Node packages
 
 The NGINX container serves static content with all of the header directives that I wanted to add.
 
-```language-docker
+```docker
 FROM node:13.2-alpine AS builder
 
 COPY package.json package-lock.json /build/
@@ -53,7 +53,7 @@ It's optional, but I highly recommend using a `.dockerignore` file to prevent `n
 
 Place an `nginx.conf` file in the root directory of your project. Be sure to change the `server_name` directive to match your domain.
 
-```language-nginx
+```nginx
 server {
     listen 8080;
     server_name yourdomain.com;
@@ -81,13 +81,13 @@ server {
 
 Create the Docker image, tagging it for storage in [Google's Container Registry](https://cloud.google.com/container-registry/docs/).
 
-```language-bash
+```bash
 docker build -t gcr.io/PROJECT-ID/image:latest .
 ```
 
 Push the image to the registry.
 
-```language-bash
+```bash
 docker push gcr.io/PROJECT-ID/image:latest
 ```
 
@@ -95,7 +95,7 @@ docker push gcr.io/PROJECT-ID/image:latest
 
 Deploy the new image to Cloud Run. Substitute your service name and the image name created above.
 
-```language-bash
+```bash
 gcloud run deploy SERVICE-NAME --image gcr.io/PROJECT-ID/image:latest
 ```
 

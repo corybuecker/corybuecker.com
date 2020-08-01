@@ -14,7 +14,7 @@ Since my last post, I made a large architectual change to [ExLytics](https://git
 
 ExLytics' schema is still very simple:
 
-```language-markup
+```markup
                                                  Table "public.events"
    Column    |              Type              | Collation | Nullable | Default | Storage  | Stats target | Description 
 -------------+--------------------------------+-----------+----------+---------+----------+--------------+-------------
@@ -30,7 +30,7 @@ Indexes:
 
 On top of this schema, I have created two [continuous aggregates](https://docs.timescale.com/latest/using-timescaledb/continuous-aggregates). TimescaleDB surfaces these as materialized views and updates them on a user-configurable cadence. For this post, I am going to be referencing the page views view:
 
-```language-sql
+```sql
 CREATE VIEW page_views WITH (timescaledb.continuous) AS
 SELECT
   time_bucket ('1day', time) AS day,
@@ -46,7 +46,7 @@ GROUP BY
 ;
 ```
 
-```language-markup
+```markup
                                     View "public.page_views"
  Column |            Type             | Collation | Nullable | Default | Storage  | Description 
 --------+-----------------------------+-----------+----------+---------+----------+-------------

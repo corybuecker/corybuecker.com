@@ -16,7 +16,7 @@ GitHub hosts the underlying Next.js project. GitHub Actions can automate buildin
 
 Push a simple image to Container Registry to create the Cloud Storage bucket. This avoids assignment of bucket administration permissions to the service account.
 
-```language-bash
+```bash
 gcloud auth configure-docker
 docker pull hello-world
 docker tag hello-world gcr.io/PROJECT-ID/hello-world:latest
@@ -33,7 +33,7 @@ Create a new role and assign the role the following permissions for the Containe
 - run.services.list
 - run.services.update
 
-```language-bash
+```bash
 gcloud iam roles create github_actions \
     --project=PROJECT-ID \
     --title="GitHub Actions"
@@ -52,14 +52,14 @@ In order to make things a _bit_ more convenient I am sharing a single service ac
 
 Create the dedicated service account.
 
-```language-bash
+```bash
 gcloud iam service-accounts create github-actions \
     --display-name="GitHub Actions"
 ```
 
 Create and download a service account key file.
 
-```language-bash
+```bash
 gcloud iam service-accounts keys create github_actions_key.json \
     --iam-account=github-actions@PROJECT_ID.iam.gserviceaccount.com
 ```
@@ -68,7 +68,7 @@ gcloud iam service-accounts keys create github_actions_key.json \
 
 Now that the service account and custom role have been created, it is time to assign the custom role to the new service account.
 
-```language-bash
+```bash
 gcloud projects add-iam-policy-binding PROJECT_ID \
     --member serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com \
     --role projects/PROJECT_ID/roles/github_actions
@@ -80,7 +80,7 @@ Under Storage > Browser, find the bucket containing the Docker images. It is usu
 
 Add the Storage Admin permission for this bucket to the service account created earlier. This will allow that service account to push Docker images into the Storage used by Cloud Registry.
 
-```language-bash
+```bash
 gsutil iam ch serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com:roles/storage.admin gs://BUCKET_NAME
 ```
 
@@ -90,7 +90,7 @@ This was an unusual step required by Cloud Run. Cloud Run uses a [provided servi
 
 However, we have to allow the GitHub Actions service account to [act as itself in order to deploy a service it will be running](https://cloud.google.com/run/docs/reference/iam/roles#additional-configuration).
 
-```language-bash
+```bash
 gcloud iam service-accounts add-iam-policy-binding github-actions@PROJECT_ID.iam.gserviceaccount.com \
     --member="serviceAccount:github-actions@PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/iam.serviceAccountUser"
@@ -100,19 +100,19 @@ gcloud iam service-accounts add-iam-policy-binding github-actions@PROJECT_ID.iam
 
 It is a good idea to load the service account locally to test the following steps.
 
-```language-bash
+```bash
 gcloud auth activate-service-account --key-file PATH-TO-JSON-KEY
 ```
 
 If you need to switch back to your primary user run this command.
 
-```language-bash
+```bash
 gcloud config set account user@example.com
 ```    
 
 At this point you can deploy to Cloud Run with the new service account.
 
-```language-bash
+```bash
 gcloud run deploy nginx \
     --image gcr.io/PROJECT-ID/nginx:$(git rev-parse HEAD) \
     --service-account github-actions@PROJECT-ID.iam.gserviceaccount.com \
