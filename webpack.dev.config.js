@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const { merge } = require('webpack-merge')
+const {merge} = require('webpack-merge')
 const baseConfig = require('./webpack.config.js')
 
 module.exports = merge(baseConfig, {
@@ -7,7 +7,7 @@ module.exports = merge(baseConfig, {
   devtool: 'eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      EXLYTICS_URL: '\'http://localhost:4000\'',
+      EXLYTICS_URL: '\'https://integration-exlytics.corybuecker.com\'',
       EXLYTICS_ACCOUNT: '\'d444f24c-1829-4f73-b7c1-76ffaf6f1687\''
     })
   ]
