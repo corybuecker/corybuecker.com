@@ -1,4 +1,4 @@
-FROM elixir:1.10.3-alpine AS be_builder
+FROM elixir:1.10.4-alpine AS be_builder
 
 RUN apk add git openssh-client
 ARG mix_env=production

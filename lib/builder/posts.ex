@@ -44,7 +44,7 @@ defmodule Builder.Posts do
       [frontmatter, post]
     end)
     |> Enum.map(fn [frontmatter, post] ->
-      {:ok, ast, []} = Earmark.as_ast(post)
+      {:ok, ast, []} = EarmarkParser.as_ast(post)
 
       File.mkdir_p("output/post/#{frontmatter[:slug]}")
 
@@ -52,8 +52,8 @@ defmodule Builder.Posts do
         Traverse.mapall(
           ast,
           fn
-            {"a", x, y} ->
-              {"tracked-anchor", [], [{"a", x, y}]}
+            {"a", x, y, z} ->
+              {"tracked-anchor", [], [{"a", x, y, z}], %{}}
 
             other ->
               other
@@ -63,14 +63,14 @@ defmodule Builder.Posts do
 
       body = Earmark.Transform.transform(ast, %{pretty: false, indent: 0})
 
-      {:ok, ast, []} = Earmark.as_ast(frontmatter[:preview])
+      {:ok, ast, []} = EarmarkParser.as_ast(frontmatter[:preview])
 
       ast =
         Traverse.mapall(
           ast,
           fn
-            {"a", x, y} ->
-              {"tracked-anchor", [], [{"a", x, y}]}
+            {"a", x, y, z} ->
+              {"tracked-anchor", [], [{"a", x, y, z}], %{}}
 
             other ->
               other

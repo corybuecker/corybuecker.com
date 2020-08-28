@@ -5,7 +5,7 @@ defmodule Builder.MixProject do
     [
       app: :builder,
       version: "0.1.0",
-      elixir: "1.10.3",
+      elixir: "1.10.4",
       start_permanent: Mix.env() == :production,
       deps: deps()
     ]
@@ -19,8 +19,8 @@ defmodule Builder.MixProject do
 
   defp deps do
     [
-      {:earmark, "~> 1.4.9"},
-      {:yaml_elixir, "~> 2.4.0"},
+      {:earmark, "~> 1.4.10"},
+      {:yaml_elixir, "~> 2.5.0"},
       {:traverse, "~> 1.0.1"},
       {:phoenix_html, "~> 2.14.2"},
       {:credo, "~> 1.4.0", only: [:dev], runtime: false},
