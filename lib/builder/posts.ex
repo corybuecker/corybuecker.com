@@ -44,7 +44,7 @@ defmodule Builder.Posts do
       [frontmatter, post]
     end)
     |> Enum.map(fn [frontmatter, post] ->
-      {:ok, ast, []} = EarmarkParser.as_ast(post)
+      {:ok, ast, []} = EarmarkParser.as_ast(post, code_class_prefix: "language-")
 
       File.mkdir_p("output/post/#{frontmatter[:slug]}")
 
@@ -63,7 +63,7 @@ defmodule Builder.Posts do
 
       body = Earmark.Transform.transform(ast, %{pretty: false, indent: 0})
 
-      {:ok, ast, []} = EarmarkParser.as_ast(frontmatter[:preview])
+      {:ok, ast, []} = EarmarkParser.as_ast(frontmatter[:preview], code_class_prefix: "language-")
 
       ast =
         Traverse.mapall(
