@@ -20,7 +20,7 @@ jobs:
       - name: Setup GCP
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          version: 297.0.1
+          # version: 297.0.1
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
       - name: Setup Docker
@@ -35,53 +35,26 @@ jobs:
       - name: Push image
         run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
-  frontend:
-    name: Frontend checks
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Node
-        uses: actions/setup-node@master
-        with:
-          node-version: 14
+  # frontend:
+  #   name: Frontend checks
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup Node
+  #       uses: actions/setup-node@master
+  #       with:
+  #         node-version: 14
       
-      - name: Checkout
-        uses: actions/checkout@master
+  #     - name: Checkout
+  #       uses: actions/checkout@master
 
-      - name: Download frontend dependencies
-        run: npm install
+  #     - name: Download frontend dependencies
+  #       run: npm install
 
-      - name: Check outdated
-        run: npm outdated
+  #     - name: Check outdated
+  #       run: npm outdated
 
-      - name: Audit
-        run: npm audit --production
+  #     - name: Audit
+  #       run: npm audit --production
 
-      - name: Lint
-        run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0
-
-  backend:
-    name: Backend checks
-
-    runs-on: ubuntu-latest
-
-    env:
-      MIX_ENV: dev
-    
-    steps:
-      - name: Setup Elixir
-        uses: actions/setup-elixir@master
-        with:
-          otp-version: 22.2.1
-          elixir-version: 1.10.4
-
-      - name: Checkout
-        uses: actions/checkout@master
-
-      - name: Download and build backend dependencies
-        run: mix deps.get && mix deps.compile
-
-      - name: Check outdated
-        run: mix hex.outdated
-
-      - name: Lint
-        run: mix credo --strict
+  #     - name: Lint
+  #       run: npx eslint '*/**/*.{js,ts,tsx,json}' --max-warnings 0

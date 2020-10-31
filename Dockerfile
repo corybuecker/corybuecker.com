@@ -1,26 +1,13 @@
-FROM elixir:1.10.4-alpine AS be_builder
+FROM node:14.4.0-alpine AS builder
 
-RUN apk add git openssh-client
-ARG mix_env=production
-ENV MIX_HOME /
-ENV MIX_ENV $mix_env
-WORKDIR $MIX_HOME
-COPY mix.exs mix.lock $MIX_HOME
-RUN mix local.hex --force
-RUN mix local.rebar --force
-RUN mix deps.get
-RUN mix deps.compile
-COPY . $MIX_HOME
-RUN mix run -e "Builder.build()"
-
-FROM node:14.4.0-alpine AS fe_builder
-
-COPY . /
+COPY . /app
+WORKDIR /app
 RUN npm install --production
 RUN npx webpack --config webpack.production.config.js
+RUN npx tsc
+RUN node dist/compile_markdown.js
 
 FROM nginx:mainline-alpine
 
-COPY --from=be_builder /output/ /usr/share/nginx/html
-COPY --from=fe_builder /output/ /usr/share/nginx/html
+COPY --from=builder /app/output/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

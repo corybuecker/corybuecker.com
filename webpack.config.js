@@ -4,7 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-  entry: './src',
   mode: 'development',
   plugins: [
     new MiniCssExtractPlugin(),

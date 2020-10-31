@@ -41,7 +41,7 @@
               <time datetime="{{published}}">{{published}}</time>
               {{#revised}}(Updated: <time datetime="{{revised}}">{{revised}}</time>){{/revised}}
             </p>
-            {{{markdown_body}}}
+            {{{topMarkdownBody}}}
             {{#children}}
             <h1>
               <tracked-anchor><a href="/post/{{slug}}">{{title}}</a></tracked-anchor>
@@ -50,7 +50,7 @@
               <time datetime="{{published}}">{{published}}</time>
               {{#revised}}(Updated: <time datetime="{{revised}}">{{revised}}</time>){{/revised}}
             </p>
-            {{{markdown_preview}}}
+            {{{markdownPreview}}}
             <p>
               <tracked-anchor><a href="/post/{{slug}}">Read more</a></tracked-anchor>
             </p>
