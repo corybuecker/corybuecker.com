@@ -24,9 +24,9 @@ for (const markdownPostPath of markdownPostPaths) {
   const frontmatterWithPost = fm(markdownRawPost)
   const markdownBody = marked(frontmatterWithPost.body)
 
-  fs.mkdirSync(`output/post/${markdownPostPath}`, { recursive: true })
+  fs.mkdirSync(`output/post/${frontmatterWithPost.attributes.slug}`, { recursive: true })
 
-  fs.writeFileSync(`output/post/${markdownPostPath}/index.html`,
+  fs.writeFileSync(`output/post/${frontmatterWithPost.attributes.slug}/index.html`,
     mustache.render(
       postTemplate,
       Object.assign(frontmatterWithPost.attributes, { markdownBody })
