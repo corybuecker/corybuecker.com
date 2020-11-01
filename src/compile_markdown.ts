@@ -44,7 +44,7 @@ let children = []
 for (const markdownPostPath of markdownPostPaths) {
   const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
   const frontmatterWithPost = fm(markdownRawPost)
-  children.push(Object.assign(frontmatterWithPost, { markdownPreview: marked(frontmatterWithPost.attributes.preview) }))
+  children.push(Object.assign(frontmatterWithPost.attributes, { markdownPreview: marked(frontmatterWithPost.attributes.preview) }))
 }
 
 fs.writeFileSync(`output/index.html`,
