@@ -44,13 +44,20 @@ let children = []
 for (const markdownPostPath of markdownPostPaths.reverse()) {
   const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
   const frontmatterWithPost = fm(markdownRawPost)
-  children.push(Object.assign(frontmatterWithPost.attributes, { markdownPreview: marked(frontmatterWithPost.attributes.preview) }))
+  children.push(Object.assign(frontmatterWithPost.attributes, { markdownPreview: marked(frontmatterWithPost.attributes.preview), sitemapLastMod: (frontmatterWithPost.attributes.updated || frontmatterWithPost.attributes.published) }))
 }
 
 fs.writeFileSync(`output/index.html`,
   mustache.render(
     indexTemplate,
     Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody })
+  )
+)
+
+fs.writeFileSync(`output/sitemap.xml`,
+  mustache.render(
+    sitemapTemplate,
+    Object.assign(topFrontmatterWithPost.attributes, { children, main_lastmod: (topFrontmatterWithPost.attributes.updated || topFrontmatterWithPost.attributes.published) })
   )
 )
 
