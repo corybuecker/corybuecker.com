@@ -18,7 +18,7 @@ These instructions are not meant to be a substitute for [Homebrew](https://brew.
 
 On a Mac, I don't install programs and libraries into the `usr` folder. Rather, I have a folder called `tools` in my home directory. I have my `PATH` configured as `export PATH="/Users/corybuecker/tools/bin:$PATH"`.
 
-_I have installed Xcode 12.2_, not the developer tools. I believe the developer tools would work just fine, however.
+I have installed _Xcode 12.2_ rather than the developer tools. The developer tools should would work just fine.
 
 Setting the `tools` directory as an environment variable will make the following steps easier.
 
