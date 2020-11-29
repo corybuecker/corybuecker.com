@@ -54,7 +54,7 @@ curl -L -o gnupg-2.2.25.tar.bz2 https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.25.
 
 Verifying the signature or digest of downloaded source code is important to validate authenticity and reduce the possibility of supply chain vulnerabilities. I'm including the digests I used to validate the tarballs, but _you_ should always find and build the checksum file yourself from sources you trust. This is another great reason to use a package manager like Homebrew as this step is automatically performed when installing a package.
 
-```
+```bash
 6fc69c01688c9458a57eb9a1664c9aba372ccda420a02bf4429fe610e7e7d591  pkg-config-0.29.2.tar.gz
 4a836edcae592094ef1c5a4834908f44986ab2b82e0824a0344b49df8cdb298f  libgpg-error-1.39.tar.bz2
 c080ee96b3bd519edd696cfcebdecf19a3952189178db9887be713ccbcb5fbf0  libassuan-2.5.4.tar.bz2
