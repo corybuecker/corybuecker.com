@@ -38,13 +38,13 @@ const topPost = markdownPostPaths.pop()
 const topMarkdownRawPost = fs.readFileSync(`content/posts/${topPost}`, 'utf8')
 const topFrontmatterWithPost = fm(topMarkdownRawPost)
 const topMarkdownBody = marked(topFrontmatterWithPost.body)
-const main_lastmod = new Date(topFrontmatterWithPost.attributes.updated || topFrontmatterWithPost.attributes.published)
+const main_lastmod = new Date(topFrontmatterWithPost.attributes.revised || topFrontmatterWithPost.attributes.published)
 let children = []
 
 for (const markdownPostPath of markdownPostPaths.reverse()) {
   const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
   const frontmatterWithPost = fm(markdownRawPost)
-  const sitemapLastMod = new Date(frontmatterWithPost.attributes.updated || frontmatterWithPost.attributes.published)
+  const sitemapLastMod = new Date(frontmatterWithPost.attributes.revised || frontmatterWithPost.attributes.published)
   children.push(Object.assign(frontmatterWithPost.attributes, { markdownPreview: marked(frontmatterWithPost.attributes.preview), sitemapLastMod: sitemapLastMod.toISOString() }))
 }
 
