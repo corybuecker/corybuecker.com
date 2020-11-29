@@ -41,7 +41,7 @@ const topMarkdownBody = marked(topFrontmatterWithPost.body)
 
 let children = []
 
-for (const markdownPostPath of markdownPostPaths) {
+for (const markdownPostPath of markdownPostPaths.reverse()) {
   const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
   const frontmatterWithPost = fm(markdownRawPost)
   children.push(Object.assign(frontmatterWithPost.attributes, { markdownPreview: marked(frontmatterWithPost.attributes.preview) }))
