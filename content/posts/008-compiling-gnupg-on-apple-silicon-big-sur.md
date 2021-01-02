@@ -10,13 +10,17 @@ slug: compiling-gnupg-from-source-on-apple-silicon-with-big-sur
 
 Compiling a program like GnuPG (GPG) from source is not difficult. But, there are many individual dependencies and this post breaks them down.
 
-# What about Homebrew?
+## What about Homebrew?
 
 These instructions are not meant to be a substitute for [Homebrew](https://brew.sh). At the time I wrote this, Homebrew support for GnuPG on Apple Silicon was still being completed and certified. Homebrew is an excellent package manager run by dedicated contributors. Strictly due to personal preference, I typically compile programs from source myself.
 
-# Build environment
+## Build environment
 
-On a Mac, I don't install programs and libraries into the `usr` folder. Rather, I have a folder called `tools` in my home directory. I have my `PATH` configured as `export PATH="/Users/corybuecker/tools/bin:$PATH"`.
+On a Mac, I don't install programs and libraries into the `usr` folder. Rather, I have a folder called `tools` in my home directory. I have my `PATH` configured as:
+
+```bash
+export PATH="/Users/corybuecker/tools/bin:$PATH"
+```
 
 I have installed _Xcode 12.2_ rather than the developer tools. The developer tools should would work just fine.
 
@@ -32,7 +36,7 @@ Also, many of these packages have been updated to work on Apple Silicon, but the
 export BUILD="aarch64-apple-darwin20.1.0"
 ```
 
-# Download sources
+## Download sources
 
 It's possible to download and compile each package individually, but I find it much easier to stage all the downloads, verify signatures, extract files, etc. before compiling.
 
@@ -51,7 +55,7 @@ curl -L -o scute-1.6.0.tar.bz2 https://gnupg.org/ftp/gcrypt/scute/scute-1.6.0.ta
 curl -L -o gnupg-2.2.25.tar.bz2 https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.25.tar.bz2
 ```
 
-## Signatures
+### Signatures
 
 Verifying the signature or digest of downloaded source code is important to validate authenticity and reduce the possibility of supply chain vulnerabilities. I'm including the digests I used to validate the tarballs, but _you_ should always find and build the checksum file yourself from sources you trust. This is another great reason to use a package manager like Homebrew as this step is automatically performed when installing a package.
 
@@ -74,11 +78,11 @@ I saved those digests into a file called `SHASUMS` that I placed with all the ta
 shasum -c SHASUMS
 ```
 
-# Compiling
+## Compiling
 
 These packages must be compiled and installed the order outlined below. I do recommend running `make check`, but it probably isn't critical for smaller libraries.
 
-## `pkg-config`
+### `pkg-config`
 
 `pkg-config` makes it much easier to include headers and link libraries as I compile each package.
 
@@ -97,7 +101,7 @@ Once `pkg-config` is installed, add the following environment variable to your s
 export PKG_CONFIG_PATH="/Users/corybuecker/tools/lib/pkgconfig:$PKG_CONFIG_PATH"
 ```
 
-## `libgpg-error`
+### `libgpg-error`
 
 `libgpg-error` defines all the common errors for GnuPG programs.
 
@@ -110,7 +114,7 @@ make check
 make install
 ```
 
-## `libassuan`
+### `libassuan`
 
 `libassuan` provides an inter-process communication (IPC) protocol and library.
 
@@ -123,7 +127,7 @@ make check
 make install
 ```
 
-## `pinentry`
+### `pinentry`
 
 `pinentry` is used to securely read PINs and other passwords.
 
@@ -135,7 +139,7 @@ make -j4
 make install
 ```
 
-## `libgcrypt`
+### `libgcrypt`
 
 `libgcrypt` provides all the cryptographic functions for GnuPG.
 
@@ -152,7 +156,7 @@ make check
 make install
 ```
 
-## `libksba`
+### `libksba`
 
 `libksba` is an easy-to-use interface for working with certificates.
 
@@ -165,7 +169,7 @@ make check
 make install
 ```
 
-## `npth`
+### `npth`
 
 `npth` is a portable threads library.
 
@@ -178,7 +182,7 @@ make check
 make install
 ```
 
-## `scute`
+### `scute`
 
 `scute` allows the GnuPG agent to work with smart cards. If you are not using a hardware key or smart card, skip this package.
 
@@ -198,11 +202,11 @@ make install
 The test suite will fail pretty broadly for `scute`. However, it appears to require a GnuPG agent to be running, which I don't have yet.
 
 
-## `ntbtls`
+### `ntbtls`
 
 `ntbtls` is a very small TLS 1.2-only implementation used only by GnuPG tools.
 
-### Note about GnuTLS
+#### Note about GnuTLS
 
 The GnuPG project promotes `ntbtls` from their download page but [provides a pretty big warning](https://gnupg.org/software/ntbtls/index.html). However, I don't have any real concerns using it in this specific case. If you do, the classic TLS library is [GnuTLS](https://www.gnutls.org). That's a much larger package with more dependencies, and I haven't tried compiling it yet.
 
@@ -215,7 +219,7 @@ make check
 make install
 ```
 
-## `gnupg`
+### `gnupg`
 
 Whew, we made it!
 
