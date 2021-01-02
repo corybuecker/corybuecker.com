@@ -42,19 +42,16 @@
               {{#revised}}(Updated: <time datetime="{{revised}}">{{revised}}</time>){{/revised}}
             </p>
             {{{topMarkdownBody}}}
-            {{#children}}
-            <h1>
-              <tracked-anchor><a href="/post/{{slug}}">{{title}}</a></tracked-anchor>
-            </h1>
-            <p>
-              <time datetime="{{published}}">{{published}}</time>
-              {{#revised}}(Updated: <time datetime="{{revised}}">{{revised}}</time>){{/revised}}
-            </p>
-            {{{markdownPreview}}}
-            <p>
-              <tracked-anchor><a href="/post/{{slug}}">Read more</a></tracked-anchor>
-            </p>
-            {{/children}}
+            <h1>Older posts</h1>
+            <ul>
+              {{#children}}
+              <li>
+                <tracked-anchor><a href="/post/{{slug}}">{{title}}</a></tracked-anchor>
+                <time datetime="{{published}}">{{published}}</time>
+                {{#revised}}(Updated: <time datetime="{{revised}}">{{revised}}</time>){{/revised}}
+              </li>
+              {{/children}}
+            </ul>
           </div>
         </main>
       </div>
