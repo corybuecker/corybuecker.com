@@ -81,5 +81,11 @@ a {
     .wrapper h1:first-of-type {
       margin-top: 0;
     }
+
+    .older-posts {
+      p:first-of-type {
+        font-size: x-large;
+      }
+    }
   }
 }

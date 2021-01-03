@@ -1,7 +1,7 @@
 ---
 title: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur
-published: 2020-11-29 07:37:35
-revised: 2020-11-29 14:30:53
+published: 2020-11-29T07:37:35Z
+revised: 2020-11-29T14:30:53Z
 draft: false
 preview: Compiling a program like GnuPG (GPG) from source is not difficult. However, there are many individual dependencies, and this post breaks them down.
 description: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur

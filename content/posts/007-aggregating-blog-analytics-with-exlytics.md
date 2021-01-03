@@ -1,14 +1,14 @@
 ---
 title: Aggregating and reporting simple blog analytics with ExLytics
 published: 2020-05-10T21:03:17Z
-revised: 2020-05-10T23:11:24Z
+revised: 2021-01-03T17:01:12Z
 draft: false
 preview: My simple, privacy-focused analytics tool ExLytics captures page views and link clicks. Here's how I aggregate and display those analytics.
 description: Aggregate analytics from ExLytics
 slug: aggregating-blog-analytics-with-exlytics
 ---
 
-Since my last post, I made a large architectual change to [ExLytics](https://github.com/corybuecker/exlytics). I replaced Google Firestore with TimescaleDB to store and aggregate page views and click events. Part of my rationale is a desire to explore Kubernetes and run a database on that orchestration service. The other reason is that TimescaleDB is designed to [aggregate time-series data](https://docs.timescale.com/latest/using-timescaledb/continuous-aggregates) with almost no effort.
+Since my last post, I made a large architectural change to [ExLytics](https://github.com/corybuecker/exlytics). I replaced Google Firestore with TimescaleDB to store and aggregate page views and click events. Part of my rationale is a desire to explore Kubernetes and run a database on that orchestration service. The other reason is that TimescaleDB is designed to [aggregate time-series data](https://docs.timescale.com/latest/using-timescaledb/continuous-aggregates) with almost no effort.
 
 ## Storing and aggregating page views
 

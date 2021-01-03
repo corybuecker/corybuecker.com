@@ -15,8 +15,15 @@ const indexTemplate: string = fs.readFileSync('./templates/index.mustache', 'utf
 const postTemplate: string = fs.readFileSync('./templates/post.mustache', 'utf8')
 const sitemapTemplate: string = fs.readFileSync('./templates/sitemap.mustache', 'utf8')
 
-const markdownPostPaths = fs.readdirSync('./content/posts', (_err: NodeJS.ErrnoException, items: string[]) => {
+const rawMarkdownPostPaths = fs.readdirSync('./content/posts', (_err: NodeJS.ErrnoException, items: string[]) => {
   return items.map((item: string) => { return `content/posts/${item}` })
+})
+
+const markdownPostPaths = rawMarkdownPostPaths.filter((markdownPostPath: string) => {
+  const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
+  const frontmatterWithPost = fm(markdownRawPost)
+
+  return !frontmatterWithPost.attributes.draft
 })
 
 for (const markdownPostPath of markdownPostPaths) {
@@ -39,7 +46,7 @@ const topMarkdownRawPost = fs.readFileSync(`content/posts/${topPost}`, 'utf8')
 const topFrontmatterWithPost = fm(topMarkdownRawPost)
 const topMarkdownBody = marked(topFrontmatterWithPost.body)
 const main_lastmod = new Date(topFrontmatterWithPost.attributes.revised || topFrontmatterWithPost.attributes.published)
-let children = []
+const children = []
 
 for (const markdownPostPath of markdownPostPaths.reverse()) {
   const markdownRawPost = fs.readFileSync(`content/posts/${markdownPostPath}`, 'utf8')
@@ -51,7 +58,7 @@ for (const markdownPostPath of markdownPostPaths.reverse()) {
 fs.writeFileSync(`output/index.html`,
   mustache.render(
     indexTemplate,
-    Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody })
+    Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody, hasChildren: (children.length > 0) })
   )
 )
 

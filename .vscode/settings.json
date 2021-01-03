@@ -6,8 +6,17 @@
   "editor.fontFamily": "Fira Code",
   "editor.fontSize": 12,
   "editor.fontLigatures": true,
+  "insertDateString.format": "iso",
+  "insertDateString.formatDate": "iso",
+  "insertDateString.formatTime": "iso",
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "exlytics",
+    "kubernetes",
+    "pageview",
+    "record"
+  ]
 }
