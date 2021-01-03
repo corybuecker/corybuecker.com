@@ -1,10 +1,10 @@
 ---
 title: Configuring Kubernetes and NGINX Ingress for a mail server
-published: 2021-01-02T13:38:12Z
+published: 2021-01-03T17:25:39Z
 # revised: 2020-11-29 14:30:53
 draft: false
-# preview: Compiling a program like GnuPG (GPG) from source is not difficult. However, there are many individual dependencies, and this post breaks them down.
-# description: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur
+preview: This is the first of a four-part series aimed at setting up a mail server in Kubernetes (K8s). Mail server software has always confused me. I am approaching this as a learning experience.
+description: Configuring Kubernetes and NGINX Ingress for a mail server
 slug: configuring-kubernetes-and-nginx-ingress-for-a-mail-server
 ---
 
