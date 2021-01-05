@@ -1,7 +1,7 @@
 ---
 title: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur
 published: 2020-11-29T07:37:35Z
-revised: 2020-11-29T14:30:53Z
+revised: 2021-01-05T13:08:57Z
 draft: false
 preview: Compiling a program like GnuPG (GPG) from source is not difficult. However, there are many individual dependencies, and this post breaks them down.
 description: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur
@@ -12,7 +12,7 @@ Compiling a program like GnuPG (GPG) from source is not difficult. But, there ar
 
 ## What about Homebrew?
 
-These instructions are not meant to be a substitute for [Homebrew](https://brew.sh). At the time I wrote this, Homebrew support for GnuPG on Apple Silicon was still being completed and certified. Homebrew is an excellent package manager run by dedicated contributors. Strictly due to personal preference, I typically compile programs from source myself.
+These instructions are not meant to be a substitute for [Homebrew](https://brew.sh). Homebrew is an excellent package manager run by dedicated contributors. At the time I wrote this, Homebrew support for GnuPG on Apple Silicon was still being completed and certified. 
 
 ## Build environment
 
