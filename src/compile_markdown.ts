@@ -58,7 +58,7 @@ for (const markdownPostPath of markdownPostPaths.reverse()) {
 fs.writeFileSync(`output/index.html`,
   mustache.render(
     indexTemplate,
-    Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody, hasChildren: (children.length > 0) })
+    Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody, hasChildren: (children.length > 0), topSlug: topFrontmatterWithPost.attributes.slug })
   )
 )
 

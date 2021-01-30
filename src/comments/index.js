@@ -6,15 +6,19 @@ class LoadComments extends HTMLElement {
   }
 
   handleLoadCommentsClick(_e) {
-    const commento = document.createElement('div');
-    commento.id = 'commento';
-    this.parentNode.appendChild(commento);
+    const commento = document.createElement('div')
 
-    const commentoScript = document.createElement('script');
-    commentoScript.src = 'https://cdn.commento.io/js/commento.js';
-    this.parentNode.appendChild(commentoScript);
+    commento.id = 'commento'
+    commento.dataset.noFonts = true
+    commento.dataset.pageId = this.getAttribute('slug')
 
-    return this.remove();
+    this.parentNode.appendChild(commento)
+
+    const commentoScript = document.createElement('script')
+    commentoScript.src = 'https://cdn.commento.io/js/commento.js'
+    this.parentNode.appendChild(commentoScript)
+
+    return this.remove()
   }
 }
 
