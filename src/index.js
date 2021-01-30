@@ -1,5 +1,6 @@
 import './styles.scss'
 import './analytics'
+import './comments'
 
 import(/* webpackChunkName: "prismjs" */ 'prismjs')
 import(/* webpackChunkName: "prismjs" */ 'prismjs/components/prism-markup.js')

@@ -5,7 +5,7 @@
 h1 {
   font-family: 'Oswald', sans-serif;
 
-  a {
+  a, load-comments {
       font-family: 'Oswald', sans-serif;
   }
 }
@@ -87,6 +87,12 @@ a {
       p:first-of-type {
         font-size: x-large;
       }
+    }
+
+    load-comments {
+      text-decoration: underline;
+      color: #0000ee;
+      cursor: pointer;
     }
   }
 }
