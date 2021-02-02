@@ -5,7 +5,7 @@
 h1 {
   font-family: 'Oswald', sans-serif;
 
-  a, load-comments {
+  a {
       font-family: 'Oswald', sans-serif;
   }
 }
@@ -19,7 +19,8 @@ p,
 a,
 h2,
 h3,
-li {
+li,
+load-comments {
   font-family: 'Roboto', sans-serif;
 }
 
