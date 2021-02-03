@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto|Ubuntu+Mono&display=swap');
-@import './normalize';
-@import '~prismjs/themes/prism-okaidia.css';
+@import url("https://fonts.googleapis.com/css?family=Oswald|Roboto|Ubuntu+Mono&display=swap");
+@import "./normalize";
+@import "~prismjs/themes/prism-okaidia.css";
 
 h1 {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
 
   a {
-      font-family: 'Oswald', sans-serif;
+    font-family: "Oswald", sans-serif;
   }
 }
 
@@ -19,9 +19,8 @@ p,
 a,
 h2,
 h3,
-li,
-load-comments {
-  font-family: 'Roboto', sans-serif;
+li {
+  font-family: "Roboto", sans-serif;
 }
 
 p {
@@ -89,11 +88,24 @@ a {
         font-size: x-large;
       }
     }
+  }
+}
 
-    load-comments {
-      text-decoration: underline;
-      color: #0000ee;
-      cursor: pointer;
-    }
+load-comments {
+  display: inline-block;
+  padding: 0.35rem 1.2rem;
+  border: 0.1rem solid #000000;
+  margin: 0 0.3rem 0.3rem 0;
+  border-radius: 0.12rem;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #000000;
+  text-align: center;
+  transition: all 0.2s;
+  font-family: "Roboto", sans-serif;
+
+  &:hover {
+    color: #ffffff;
+    background-color: #000000;
   }
 }
