@@ -11,6 +11,11 @@ const renderer = {
 
 marked.use({ renderer });
 
+
+const manifest = JSON.parse(fs.readFileSync('output/manifest.json'))
+const mainJs = manifest["main.js"]
+const mainCss = manifest["main.css"]
+
 const indexTemplate: string = fs.readFileSync('./templates/index.mustache', 'utf8')
 const postTemplate: string = fs.readFileSync('./templates/post.mustache', 'utf8')
 const sitemapTemplate: string = fs.readFileSync('./templates/sitemap.mustache', 'utf8')
@@ -36,7 +41,8 @@ for (const markdownPostPath of markdownPostPaths) {
   fs.writeFileSync(`output/post/${frontmatterWithPost.attributes.slug}/index.html`,
     mustache.render(
       postTemplate,
-      Object.assign(frontmatterWithPost.attributes, { markdownBody })
+      Object.assign(frontmatterWithPost.attributes, { markdownBody }),
+      mainJs, mainCss
     )
   )
 }
@@ -58,7 +64,11 @@ for (const markdownPostPath of markdownPostPaths.reverse()) {
 fs.writeFileSync(`output/index.html`,
   mustache.render(
     indexTemplate,
-    Object.assign(topFrontmatterWithPost.attributes, { children, topMarkdownBody, hasChildren: (children.length > 0), topSlug: topFrontmatterWithPost.attributes.slug })
+    Object.assign(topFrontmatterWithPost.attributes, {
+      children, topMarkdownBody,
+      hasChildren: (children.length > 0), topSlug: topFrontmatterWithPost.attributes.slug,
+      mainJs, mainCss
+    })
   )
 )
 

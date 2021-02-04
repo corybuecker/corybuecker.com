@@ -1,3 +1,5 @@
+import './styles.scss'
+
 class LoadComments extends HTMLElement {
   constructor() {
     super()
