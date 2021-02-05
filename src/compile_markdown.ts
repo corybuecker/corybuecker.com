@@ -41,8 +41,7 @@ for (const markdownPostPath of markdownPostPaths) {
   fs.writeFileSync(`output/post/${frontmatterWithPost.attributes.slug}/index.html`,
     mustache.render(
       postTemplate,
-      Object.assign(frontmatterWithPost.attributes, { markdownBody }),
-      mainJs, mainCss
+      Object.assign(frontmatterWithPost.attributes, { markdownBody, mainJs, mainCss })
     )
   )
 }

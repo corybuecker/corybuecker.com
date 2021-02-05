@@ -8,7 +8,7 @@ draft: false
 slug: setting-up-network-file-system-nfs-on-kubernetes
 ---
 
-This is the second part in a series aimed at setting up a mail server in Kubernetes (K8s). I recommend reading the first part for [setting up networking in Kubernetes](/configuring-kubernetes-and-nginx-ingress-for-a-mail-server).
+This is the second part in a series aimed at setting up a mail server in Kubernetes (K8s). I recommend reading the first part for [setting up networking in Kubernetes](/post/configuring-kubernetes-and-nginx-ingress-for-a-mail-server).
 
 ## Why Kubernetes?
 
