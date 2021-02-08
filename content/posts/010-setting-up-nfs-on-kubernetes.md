@@ -1,10 +1,10 @@
 ---
 title: Setting up Network File System (NFS) on Kubernetes
 published: 2021-01-30 10:21:26
-# revised: 2020-11-29 14:30:53
+revised: 2021-02-05 06:17:26
 draft: false
-# preview: Compiling a program like GnuPG (GPG) from source is not difficult. However, there are many individual dependencies, and this post breaks them down.
-# description: Compiling GnuPG (GPG) from source on Apple Silicon with Big Sur
+preview: Before getting to Postfix and Dovecot, I need a large storage space for email. Kubernetes' persistent volumes work very well, but they have a specific limitation for this use case.
+description: Before getting to Postfix and Dovecot, I need a large storage space for email. Kubernetes' persistent volumes work very well, but they have a specific limitation for this use case.
 slug: setting-up-network-file-system-nfs-on-kubernetes
 ---
 
@@ -26,10 +26,15 @@ There are only a few volume types that support `ReadWriteMany`, but the easiest 
 
 This is the rare case where I setup a instance outside of the K8s cluster to dedicate it as a NFS server. In the future, I may explore moving this instance into K8s. It's a bit hypocritical because Postfix and Dovecot are also largely setup on dedicated servers. That said, I am more interested in getting a mail server setup than setting up NFS in K8s.
 
-I'm using an Ubuntu 20.04.1 LTS image for the standalone VM. I'm using a externally mounted volume (/dev/sdb) to actually serve as the NFS drive. Install NFS is as simple as:
+I'm using an Ubuntu 20.04.1 LTS image for the standalone VM. I'm using a externally mounted volume (/dev/sdb) to actually serve as the NFS drive. Installing NFS itself is as simple as:
 
 ```bash
 sudo apt install nfs-kernel-server
+```
+
+Setting up the external mount is also straightforward:
+
+```bash
 sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
 sudo mkdir -p /mnt/disks/network_storage_disk
 sudo mount -o discard,defaults /dev/sdb /mnt/disks/network_storage_disk

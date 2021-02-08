@@ -1,18 +1,18 @@
 ---
-title: Aggregating and reporting simple blog analytics with ExLytics
+title: Aggregating and reporting simple blog analytics with Exlytics
 published: 2020-05-10T21:03:17Z
-revised: 2021-01-03T17:01:12Z
+revised: 2021-02-07 18:24:44
 draft: false
-preview: My simple, privacy-focused analytics tool ExLytics captures page views and link clicks. Here's how I aggregate and display those analytics.
-description: Aggregate analytics from ExLytics
+preview: My simple, privacy-focused analytics tool Exlytics captures page views and link clicks. Here's how I aggregate and display those analytics.
+description: Aggregate analytics from Exlytics
 slug: aggregating-blog-analytics-with-exlytics
 ---
 
-Since my last post, I made a large architectural change to [ExLytics](https://github.com/corybuecker/exlytics). I replaced Google Firestore with TimescaleDB to store and aggregate page views and click events. Part of my rationale is a desire to explore Kubernetes and run a database on that orchestration service. The other reason is that TimescaleDB is designed to [aggregate time-series data](https://docs.timescale.com/latest/using-timescaledb/continuous-aggregates) with almost no effort.
+Since my last post, I made a large architectural change to [Exlytics](https://github.com/corybuecker/exlytics). I replaced Google Firestore with TimescaleDB to store and aggregate page views and click events. Part of my rationale is a desire to explore Kubernetes and run a database on that orchestration service. The other reason is that TimescaleDB is designed to [aggregate time-series data](https://docs.timescale.com/latest/using-timescaledb/continuous-aggregates) with almost no effort.
 
 ## Storing and aggregating page views
 
-ExLytics' schema is still very simple:
+Exlytics' schema is still very simple:
 
 ```markup
                                                  Table "public.events"
@@ -56,7 +56,7 @@ GROUP BY
  count  | bigint                      |           |          |         | plain    | 
 ```
 
-Very next on my to-do list for ExLytics is adding a site identifier so that the service can be used on multiple websites. Because TimescaleDB automatically indexes all dimensions, this will remain performant even with multiple site identifiers.
+Very next on my to-do list for Exlytics is adding a site identifier so that the service can be used on multiple websites. Because TimescaleDB automatically indexes all dimensions, this will remain performant even with multiple site identifiers.
 
 ## Reporting page views by day and page
 
@@ -64,6 +64,6 @@ Very next on my to-do list for ExLytics is adding a site identifier so that the 
 
 I decoupled the event collection application from the reporting application. They are both simplistic enough to use a single application or  an umbrella application. I wanted to use the [Phoenix Framework](https://www.phoenixframework.org/) for the dashboard application for later access to OAuth 2.0 and OpenID authentication plugins.
 
-[ExLytics Dashboard](https://github.com/corybuecker/exlytics-dashboard) is open-source and is in a very simple state at the moment. Visualizations are a lot of fun to build.
+[Exlytics Dashboard](https://github.com/corybuecker/exlytics-dashboard) is open-source and is in a very simple state at the moment. Visualizations are a lot of fun to build.
 
 ![Page views](/007-aggregating-blog-analytics-with-exlytics-page-views.png)
